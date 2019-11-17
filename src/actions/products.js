@@ -7,7 +7,7 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
-const ROOTURL = 'https://stock.eddaoust.com';
+const ROOTURL = 'https://api.eddaoust.com';
 const REQUEST_HEADER = new Headers({
     'Content-Type': 'application/json',
     'Accept': 'application/json',

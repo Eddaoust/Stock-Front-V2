@@ -2,7 +2,6 @@ export const CATEGORY_FETCH_REQUEST = 'CATEGORY_REQUEST';
 export const CATEGORY_FETCH_SUCCESS = 'CATEGORY_SUCCESS';
 export const CATEGORY_FETCH_ERROR = 'CATEGORY_ERROR';
 
-
 export const CATEGORY_CREATE_REQUEST = 'CATEGORY_CREATE_REQUEST';
 export const CATEGORY_CREATE_SUCCESS = 'CATEGORY_CREATE_SUCCESS';
 export const CATEGORY_CREATE_ERROR = 'CATEGORY_CREATE_ERROR';
@@ -12,7 +11,7 @@ export const CATEGORY_EDIT_SUCCESS = 'CATEGORY_EDIT_SUCCESS';
 export const CATEGORY_EDIT_ERROR = 'CATEGORY_EDIT_ERROR';
 
 
-const ROOTURL = 'https://stock.eddaoust.com';
+const ROOTURL = 'https://api.eddaoust.com';
 const REQUEST_HEADER = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
