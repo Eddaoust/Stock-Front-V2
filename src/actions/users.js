@@ -113,7 +113,7 @@ export function registrationProcess(formValues) {
                     };
                     res.json()
                     .then(error => {
-                        handleError.data = error;
+                        handleError.data = error.violations;
                         dispatch(registerError(handleError))
                     })
                 } else {

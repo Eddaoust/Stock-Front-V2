@@ -49,7 +49,7 @@ const reducer = (state = initialState, action) => {
     } else if(action.type === LOGIN_SUCCESS) {
         return {
             ...state,
-            user: { status: 'auth', data : {...action.data.user, accessToken: action.data.token} },
+            user: { status: 'auth', data : {accessToken: action.data.token} },
             login: { loading: false, error: false },
         };
     } else if(action.type === LOGIN_CLEAR_ERROR) {
@@ -70,7 +70,7 @@ const reducer = (state = initialState, action) => {
     } else if(action.type === REGISTER_SUCCESS) {
         return {
             ...state,
-            user: { status: 'reg', data : {accessToken: action.data.token} },
+            user: { status: 'reg'},
             registration: { loading: false, error: false },
         };
     } else if(action.type === REGISTER_CLEAR_ERROR) {

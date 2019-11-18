@@ -38,14 +38,14 @@ class Registration extends Component {
             }
         };
         if (this.props.registration.error) {
-            this.props.registration.error.data.errors.map(e => {
-                if (e === 'The email has already been taken.') {
+            this.props.registration.error.data.map(e => {
+                if (e.message === 'This value is already used.') {
                     error.email.error = true;
                     error.email.message = "L'email est déja utilisé.";
-                } else if (e === 'The password must be at least 6 characters.') {
+                } else if (e.message === 'The password must be at least 6 characters.') {
                     error.password.error = true;
                     error.password.message[0] = "Le mot de passe doit faire au moins 6 caractères.";
-                } else if (e === 'The password confirmation does not match.') {
+                } else if (e.message === 'This value should be identical to password') {
                     error.password.error = true;
                     error.password.message[1] = "Les mots de passe ne sont pas identique.";
                 }
