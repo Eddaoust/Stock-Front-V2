@@ -36,7 +36,7 @@ export function productsFetchError(error) {
 export function productsFetchProcess(user_id, token) {
     return function(dispatch) {
         dispatch(productsFetchRequest())
-        return fetch(`${ROOTURL}/api/products/${user_id}`, {
+        return fetch(`${ROOTURL}/api/users/${user_id}/products`, {
             method: 'GET',
             headers: {
                 ...REQUEST_HEADER,

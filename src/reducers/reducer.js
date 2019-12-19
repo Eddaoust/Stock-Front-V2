@@ -49,7 +49,7 @@ const reducer = (state = initialState, action) => {
     } else if(action.type === LOGIN_SUCCESS) {
         return {
             ...state,
-            user: { status: 'auth', data : {accessToken: action.data.token} },
+            user: { status: 'auth', data : {accessToken: action.data.token, id: action.data.data.id} },
             login: { loading: false, error: false },
         };
     } else if(action.type === LOGIN_CLEAR_ERROR) {
@@ -137,7 +137,7 @@ const reducer = (state = initialState, action) => {
     } else if(action.type === PRODUCTS_FETCH_SUCCESS) {
         return {
             ...state,
-            product: {loading: false, error: false, data: action.data}
+            product: {loading: false, error: false, data: action.data["hydra:member"]}
         };
     }
     return state;

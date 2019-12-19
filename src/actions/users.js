@@ -11,10 +11,10 @@ export const REGISTER_CLEAR_ERROR = 'REGISTER_CLEAR_ERROR';
 export const FETCH_USER = 'FETCH_USER';
 
 const ROOTURL = 'https://api.eddaoust.com';
-const REQUEST_HEADER = new Headers({
+const REQUEST_HEADER = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-});
+};
 
 export function loginRequest() {
     return {
@@ -45,7 +45,7 @@ export function loginClearError() {
 export function loginProcess(formValues) {
     return function(dispatch) {
         dispatch(loginRequest())
-        return fetch(`${ROOTURL}/authentication_token`, {
+        return fetch(`${ROOTURL}/api/login_check`, {
             method: 'POST',
             headers: REQUEST_HEADER,
             body: JSON.stringify(formValues)
@@ -113,7 +113,7 @@ export function registrationProcess(formValues) {
                     };
                     res.json()
                     .then(error => {
-                        handleError.data = error.violations;
+                        handleError.data = error;
                         dispatch(registerError(handleError))
                     })
                 } else {

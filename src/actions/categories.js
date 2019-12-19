@@ -40,7 +40,7 @@ export function categoryFetchError(error) {
 export function categoryFetchProcess(user_id, token) {
     return function(dispatch) {
         dispatch(categoryFetchRequest())
-        return fetch(`${ROOTURL}/api/category/${user_id}`, {
+        return fetch(`${ROOTURL}/api/users/${user_id}/categories`, {
             method: 'GET',
             headers: {
                 ...REQUEST_HEADER,

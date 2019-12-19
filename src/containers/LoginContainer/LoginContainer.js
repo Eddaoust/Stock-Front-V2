@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onLogin: (e) => {
             dispatch(loginProcess({
-                email: e.target.querySelectorAll('input')[0].value,
+                username: e.target.querySelectorAll('input')[0].value,
                 password: e.target.querySelectorAll('input')[1].value
             }))
         },
