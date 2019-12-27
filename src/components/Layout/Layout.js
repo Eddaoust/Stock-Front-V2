@@ -102,7 +102,7 @@ function Layout(props) {
             <Divider />
             <List>
                 {/*TODO Sort by alphabetical order*/}
-                {props.category.data ? props.category.data.map(category => (
+                {props.category.data ? props.category.data.categories.map(category => (
                     <div key={category.id}>
                         <ListItem button key={category.id}
                                   onClick={event => handleMenuItemClick(event, category.id)}
@@ -119,7 +119,7 @@ function Layout(props) {
                             </IconButton>
                         </ListItem>
                         <List className={classes.nested}>
-                            {category.children.map(subCategory => (
+                            {category.subCategories.map(subCategory => (
                                 <ListItem button key={subCategory.id}
                                           onClick={event => handleMenuItemClick(event, subCategory.id)}
                                           selected={subCategory.id === selectedIndex}>
