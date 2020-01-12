@@ -96,17 +96,17 @@ const reducer = (state = initialState, action) => {
     }  else if(action.type === CATEGORY_CREATE_REQUEST) {
         return {
             ...state,
-            category: {loading: true, error: false, data: [...state.category.data]}
+            category: {loading: true, error: false, data: [...state.category.data.categories]}
         };
     } else if(action.type === CATEGORY_CREATE_ERROR) {
         return {
             ...state,
-            category: {loading: false, error: action.data, data: [...state.category.data]}
+            category: {loading: false, error: action.data, data: [...state.category.data.categories]}
         };
     } else if(action.type === CATEGORY_CREATE_SUCCESS) {
         return {
             ...state,
-            category: {loading: false, error: false, data: [...state.category.data, action.data]}
+            category: {loading: false, error: false, data: [...state.category.data.categories, action.data]}
         };
     } else if(action.type === CATEGORY_EDIT_REQUEST) {
         return {
@@ -137,7 +137,7 @@ const reducer = (state = initialState, action) => {
     } else if(action.type === PRODUCTS_FETCH_SUCCESS) {
         return {
             ...state,
-            product: {loading: false, error: false, data: action.data["hydra:member"]}
+            product: {loading: false, error: false, data: action.data.products}
         };
     }
     return state;

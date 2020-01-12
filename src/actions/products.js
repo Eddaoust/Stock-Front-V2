@@ -7,11 +7,11 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
-const ROOTURL = 'https://api.eddaoust.com';
-const REQUEST_HEADER = new Headers({
+const ROOTURL = 'http://localhost';
+const REQUEST_HEADER = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-});
+};
 
 export function productsFetchRequest() {
     return {
@@ -36,7 +36,7 @@ export function productsFetchError(error) {
 export function productsFetchProcess(user_id, token) {
     return function(dispatch) {
         dispatch(productsFetchRequest())
-        return fetch(`${ROOTURL}/api/users/${user_id}/products`, {
+        return fetch(`${ROOTURL}/api/product/${user_id}`, {
             method: 'GET',
             headers: {
                 ...REQUEST_HEADER,

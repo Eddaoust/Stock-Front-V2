@@ -11,7 +11,7 @@ export const CATEGORY_EDIT_SUCCESS = 'CATEGORY_EDIT_SUCCESS';
 export const CATEGORY_EDIT_ERROR = 'CATEGORY_EDIT_ERROR';
 
 
-const ROOTURL = 'https://api.eddaoust.com';
+const ROOTURL = 'http://localhost';
 const REQUEST_HEADER = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -169,6 +169,7 @@ export function categoryCreateProcess(formValues, token, props) {
                 } else {
                     res.json()
                         .then(response => {
+                            console.log(response)
                             dispatch(categoryCreateSuccess(response))
                             props.history.push('/app')
                         });
