@@ -169,7 +169,6 @@ export function categoryCreateProcess(formValues, token, props) {
                 } else {
                     res.json()
                         .then(response => {
-                            console.log(response)
                             dispatch(categoryCreateSuccess(response))
                             props.history.push('/app')
                         });

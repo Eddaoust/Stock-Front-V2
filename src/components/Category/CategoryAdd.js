@@ -13,14 +13,14 @@ function CategoryAdd(props) {
     let error = false;
     let helperText = '';
     if (props.category.error) {
-        props.category.error.data.errors.name.map(e => {
-            if (e === 'The name must be at least 2 characters.') {
+        props.category.error.data.map(e => {
+            if (e.message === 'The name must be at least 2 characters.') {
                 error = true;
                 helperText = "La catégorie doit faire au moins 2 caractères.";
-            } else if (e === 'The name may not be greater than 30 characters.') {
+            } else if (e.message === 'The name may not be greater than 30 characters.') {
                 error = true;
                 helperText = "La catégorie doit faire au maximum 30 caractères.";
-            } else if (e === 'The name must be a string.') {
+            } else if (e.message === 'The name must be a string.') {
                 error = true;
                 helperText = "La catégorie doit être une chaine de caractère.";
             }
