@@ -11,6 +11,7 @@ export const REGISTER_CLEAR_ERROR = 'REGISTER_CLEAR_ERROR';
 export const FETCH_USER = 'FETCH_USER';
 
 const ROOTURL = 'http://localhost';
+//const ROOTURL = 'https://api.eddaoust.com';
 const REQUEST_HEADER = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

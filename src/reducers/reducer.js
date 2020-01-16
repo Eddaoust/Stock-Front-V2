@@ -119,11 +119,11 @@ const reducer = (state = initialState, action) => {
             category: {loading: false, error: action.data, data: [...state.category.data]}
         };
     } else if(action.type === CATEGORY_EDIT_SUCCESS) {
+        const modifiedData = updateCategory(state.category.data, action.data);
         return {
             ...state,
-            //TODO Find a way to replace data in category
-            category: {loading: false, error: false, data: [...state.category.data, action.data]}
-        };
+            category: {loading: false, error: false, data: modifiedData}
+        }
     } else if(action.type === PRODUCTS_FETCH_REQUEST) {
         return {
             ...state,
@@ -144,3 +144,15 @@ const reducer = (state = initialState, action) => {
 };
 
 export default reducer;
+
+function updateCategory(categories, data) {
+    return categories.map(category => {
+        if (category.id === data.id) {
+            return {
+                ...category,
+                name: data.name
+            }
+        }
+        return category;
+    })
+}

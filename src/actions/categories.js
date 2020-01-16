@@ -12,6 +12,7 @@ export const CATEGORY_EDIT_ERROR = 'CATEGORY_EDIT_ERROR';
 
 
 const ROOTURL = 'http://localhost';
+//const ROOTURL = 'https://api.eddaoust.com';
 const REQUEST_HEADER = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

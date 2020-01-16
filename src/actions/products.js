@@ -8,6 +8,7 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
 const ROOTURL = 'http://localhost';
+//const ROOTURL = 'https://api.eddaoust.com';
 const REQUEST_HEADER = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
