@@ -7,20 +7,16 @@ import CategoryEditContainer from "../../containers/CategoryEditContainer/Catego
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import {Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal, Button} from '@material-ui/core'
 import MailIcon from '@material-ui/icons/Mail';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CancelIcon from '@material-ui/icons/Cancel';
+
 
 
 const drawerWidth = 240;
+let modalCategory = '';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,6 +40,15 @@ const useStyles = makeStyles(theme => ({
     nested: {
         paddingLeft: theme.spacing(4),
     },
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+
 }));
 
 function Layout(props) {
@@ -52,6 +57,26 @@ function Layout(props) {
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const [open, setOpen] = React.useState(false);
+
+    const handleModalOpen = (event, categoryId, categoryName) => {
+        modalCategory = {
+            id: categoryId,
+            name: categoryName
+        };
+        event.stopPropagation();
+        setOpen(true);
+    };
+
+    const handleModalClose = (event) => {
+        event.stopPropagation();
+        setOpen(false);
+    };
+
+    function deleteCategory(categoryId, token, props, event) {
+        props.categoryDelete(categoryId, token, props)
+        handleModalClose(event)
+    }
 
     // Get the user categories on mount
     useEffect(() =>{
@@ -101,7 +126,6 @@ function Layout(props) {
             </List>
             <Divider />
             <List>
-                {/*TODO Sort by alphabetical order*/}
                 {props.category.data ? props.category.data.map(category => (
                     <div key={category.id}>
                         <ListItem button key={category.id}
@@ -114,6 +138,7 @@ function Layout(props) {
                                 <EditIcon fontSize="small"/>
                             </IconButton>
                             <IconButton
+                                onClick={(event) => handleModalOpen(event, category.id, category.name)}
                                 size="small">
                                 <DeleteIcon fontSize="small"/>
                             </IconButton>
@@ -173,8 +198,38 @@ function Layout(props) {
                         {drawer}
                     </Drawer>
                 </Hidden>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={open}
+                    onClose={handleModalClose}
+                >
+                    <div className={classes.paper}>
+                        <h2 id="simple-modal-title">Supprimer une catégorie</h2>
+                        <p id="simple-modal-description">Voulez vous supprimer la catégorie suivante: <strong>{modalCategory.name}</strong></p>
+                        <Button
+                            onClick={(event) => deleteCategory(modalCategory.id, props.user.data.accessToken, props, event)}
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            startIcon={<DeleteIcon />}
+                        >
+                            Supprimer
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<CancelIcon />}
+                            onClick={handleModalClose}
+                        >
+                            Annuler
+                        </Button>
+                    </div>
+                </Modal>
             </nav>
 
+            {/* App content routing */ }
             <main className={classes.content}>
                 <Switch>
                     <Route path="/app/category/add" exact component={CategoryAddContainer}/>

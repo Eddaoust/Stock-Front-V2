@@ -1,6 +1,6 @@
 import Layout from '../../components/Layout/Layout';
 import {connect} from 'react-redux';
-import {categoryFetchProcess} from "../../actions/categories";
+import {categoryFetchProcess, categoryDeleteProcess} from "../../actions/categories";
 
 const mapStateToProps = state => {
     return {
@@ -11,7 +11,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        categoryFetch: (user_id, token) => dispatch(categoryFetchProcess(user_id, token))
+        categoryFetch: (user_id, token) => dispatch(categoryFetchProcess(user_id, token)),
+        categoryDelete: (categoryId, token, props) => dispatch(categoryDeleteProcess(categoryId, token, props))
     };
 };
 

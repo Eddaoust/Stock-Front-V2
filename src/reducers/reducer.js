@@ -18,7 +18,10 @@ import {
     CATEGORY_CREATE_SUCCESS,
     CATEGORY_EDIT_REQUEST,
     CATEGORY_EDIT_ERROR,
-    CATEGORY_EDIT_SUCCESS
+    CATEGORY_EDIT_SUCCESS,
+    CATEGORY_DELETE_REQUEST,
+    CATEGORY_DELETE_SUCCESS,
+    CATEGORY_DELETE_ERROR,
     } from '../actions/categories';
 
 import {
@@ -93,7 +96,28 @@ const reducer = (state = initialState, action) => {
             ...state,
             category: {loading: false, error: false, data: action.data.categories}
         };
-    }  else if(action.type === CATEGORY_CREATE_REQUEST) {
+    } else if(action.type === CATEGORY_DELETE_REQUEST) {
+        return {
+            ...state,
+            category: {loading: true, error: false, data: [...state.category.data]}
+        };
+    } else if(action.type === CATEGORY_DELETE_ERROR) {
+        return {
+            ...state,
+            category: {loading: false, error: action.data, data: [...state.category.data]}
+        };
+    } else if(action.type === CATEGORY_DELETE_SUCCESS) {
+        return {
+            ...state,
+            category: {loading: false, error: false, data: state.category.data.filter(item => {
+                if (item.id === action.data) {
+                    return false;
+                } else {
+                    return true;
+                }
+                })}
+        };
+    } else if(action.type === CATEGORY_CREATE_REQUEST) {
         return {
             ...state,
             category: {loading: true, error: false, data: [...state.category.data]}

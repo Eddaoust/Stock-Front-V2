@@ -10,6 +10,10 @@ export const CATEGORY_EDIT_REQUEST = 'CATEGORY_EDIT_REQUEST';
 export const CATEGORY_EDIT_SUCCESS = 'CATEGORY_EDIT_SUCCESS';
 export const CATEGORY_EDIT_ERROR = 'CATEGORY_EDIT_ERROR';
 
+export const CATEGORY_DELETE_REQUEST = 'CATEGORY_DELETE_REQUEST';
+export const CATEGORY_DELETE_SUCCESS = 'CATEGORY_DELETE_SUCCESS';
+export const CATEGORY_DELETE_ERROR = 'CATEGORY_DELETE_ERROR';
+
 
 const ROOTURL = 'http://localhost';
 //const ROOTURL = 'https://api.eddaoust.com';
@@ -171,6 +175,59 @@ export function categoryCreateProcess(formValues, token, props) {
                     res.json()
                         .then(response => {
                             dispatch(categoryCreateSuccess(response))
+                            props.history.push('/app')
+                        });
+                }
+            })
+    }
+}
+
+export function categoryDeleteRequest() {
+    return {
+        type: CATEGORY_DELETE_REQUEST
+    }
+}
+
+export function categoryDeleteSuccess(response) {
+    return {
+        type: CATEGORY_DELETE_SUCCESS,
+        data: response
+    }
+}
+
+export function categoryDeleteError(error) {
+    return {
+        type: CATEGORY_DELETE_ERROR,
+        data: error
+    }
+}
+
+export function categoryDeleteProcess(categoryId, token, props) {
+    return function(dispatch) {
+        dispatch(categoryDeleteRequest())
+        return fetch(`${ROOTURL}/api/category/${categoryId}`, {
+            method: 'DELETE',
+            headers: {
+                ...REQUEST_HEADER,
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                if (res.status !== 200) {
+                    const handleError = {
+                        status: res.status,
+                        text: res.statusText,
+                        data: ''
+                    };
+                    res.json()
+                        .then(error => {
+                            handleError.data = error;
+                            dispatch(categoryDeleteError(handleError))
+                        })
+                } else {
+                    res.json()
+                        .then(response => {
+                            dispatch(categoryDeleteSuccess(response))
                             props.history.push('/app')
                         });
                 }
