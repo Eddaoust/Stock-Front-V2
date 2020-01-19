@@ -104,9 +104,11 @@ const reducer = (state = initialState, action) => {
             category: {loading: false, error: action.data, data: [...state.category.data]}
         };
     } else if(action.type === CATEGORY_CREATE_SUCCESS) {
+        const newCategoryData = [...state.category.data, action.data];
+        newCategoryData.sort(sortCategory);
         return {
             ...state,
-            category: {loading: false, error: false, data: [...state.category.data, action.data]}
+            category: {loading: false, error: false, data: newCategoryData}
         };
     } else if(action.type === CATEGORY_EDIT_REQUEST) {
         return {
@@ -155,4 +157,14 @@ function updateCategory(categories, data) {
         }
         return category;
     })
+}
+
+function sortCategory(a, b) {
+    if ( a.name.toUpperCase() < b.name.toUpperCase() ){
+        return -1;
+    }
+    if ( a.name.toUpperCase() > b.name.toUpperCase() ){
+        return 1;
+    }
+    return 0;
 }
