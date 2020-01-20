@@ -30,6 +30,12 @@ import {
     PRODUCTS_FETCH_SUCCESS
 } from "../actions/products";
 
+import {
+    SUBCATEGORY_CREATE_REQUEST,
+    SUBCATEGORY_CREATE_ERROR,
+    SUBCATEGORY_CREATE_SUCCESS
+} from "../actions/subCategories";
+
 const initialState = {
     user: { status: false, data : {} },
     login: { loading: false, error: false },

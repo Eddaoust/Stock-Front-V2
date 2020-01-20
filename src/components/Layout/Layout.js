@@ -4,6 +4,7 @@ import Navbar from "./UI/Navbar";
 import ProductsContainer from "../../containers/ProductsContainer/ProductsContainer";
 import CategoryAddContainer from "../../containers/CategoryAddContainer/CategoryAddContainer";
 import CategoryEditContainer from "../../containers/CategoryEditContainer/CategoryEditContainer";
+import SubCategoryAddContainer from "../../containers/SubCategoryAddContainer/SubCategoryAddContainer";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +13,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
-
-
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const drawerWidth = 240;
 let modalCategory = '';
@@ -48,7 +48,6 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
-
 }));
 
 function Layout(props) {
@@ -58,6 +57,11 @@ function Layout(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [open, setOpen] = React.useState(false);
+
+    // Get the user categories on mount
+    useEffect(() =>{
+        props.categoryFetch(props.user.data.id, props.user.data.accessToken)
+    }, []);
 
     const handleModalOpen = (event, categoryId, categoryName) => {
         modalCategory = {
@@ -78,11 +82,6 @@ function Layout(props) {
         handleModalClose(event)
     }
 
-    // Get the user categories on mount
-    useEffect(() =>{
-        props.categoryFetch(props.user.data.id, props.user.data.accessToken)
-    }, []);
-
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
     }
@@ -102,6 +101,15 @@ function Layout(props) {
             state: {
                 categoryId: category_id,
                 categoryName: category_name
+            }
+        })
+    }
+
+    function handleSubCategoryAdd(category_id) {
+        props.history.push({
+            pathname: "/app/sub-category/add",
+            state: {
+                categoryId: category_id
             }
         })
     }
@@ -144,6 +152,14 @@ function Layout(props) {
                             </IconButton>
                         </ListItem>
                         <List className={classes.nested}>
+                            <ListItem>
+                                <ListItemText>Ajouter une sous-catégorie</ListItemText>
+                                <IconButton
+                                    onClick={() => handleSubCategoryAdd(category.id)}
+                                    size="small">
+                                    <AddCircleIcon/>
+                                </IconButton>
+                            </ListItem>
                             {category.subCategories.map(subCategory => (
                                 <ListItem button key={subCategory.id}
                                           onClick={event => handleMenuItemClick(event, subCategory.id)}
@@ -234,6 +250,7 @@ function Layout(props) {
                 <Switch>
                     <Route path="/app/category/add" exact component={CategoryAddContainer}/>
                     <Route path="/app/category/edit" exact component={CategoryEditContainer}/>
+                    <Route path="/app/sub-category/add" exact component={SubCategoryAddContainer}/>
                     <Route path="/app" component={ProductsContainer}/>
                 </Switch>
             </main>

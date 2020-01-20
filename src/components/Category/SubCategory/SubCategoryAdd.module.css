@@ -1,0 +1,27 @@
+.Content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.Paper {
+  width: 800px;
+  padding: 30px;
+  margin: 100px;
+}
+
+.Title {
+  margin-bottom: 15px!important;
+}
+
+.Button {
+  margin-top: 15px!important;
+}
+
+@media screen and (max-width: 400px) {
+  .Paper {
+    width: 100%;
+    padding: 30px;
+    margin: 0;
+  }
+}
