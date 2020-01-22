@@ -65,7 +65,6 @@ export function subCategoryCreateProcess(formValues, token, props) {
                 } else {
                     res.json()
                         .then(response => {
-                            console.log(response)
                             dispatch(subCategoryCreateSuccess(response))
                             props.history.push('/app')
                         });

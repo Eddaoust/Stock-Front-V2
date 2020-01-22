@@ -171,6 +171,22 @@ const reducer = (state = initialState, action) => {
             ...state,
             product: {loading: false, error: false, data: action.data.products}
         };
+    } else if(action.type === SUBCATEGORY_CREATE_REQUEST) {
+        return {
+            ...state,
+            product: {loading: true, error: false, data: [...state.category.data]}
+        };
+    } else if(action.type === SUBCATEGORY_CREATE_ERROR) {
+        return {
+            ...state,
+            product: {loading: false, error: action.data, data: [...state.category.data]}
+        };
+    } else if(action.type === SUBCATEGORY_CREATE_SUCCESS) {
+        addSubCategory(state.category.data, action.data);
+        return {
+            ...state,
+            product: {loading: false, error: false, data: [...state.category.data]}
+        };
     }
     return state;
 };
@@ -197,4 +213,27 @@ function sortCategory(a, b) {
         return 1;
     }
     return 0;
+}
+
+function updateSubCategory(categories, data) {
+    return categories.map(category => {
+        return category.subCategories.map(subCategory => {
+            if (subCategory.id === data.id) {
+                return {
+                    ...subCategory,
+                    name: data.name
+                }
+            } else {
+                return subCategory
+            }
+        })
+    })
+}
+
+function addSubCategory(array, data) {
+    return array.map(category => {
+        if (category.id === data.parent.id) {
+            category.subCategories.push(data)
+        }
+    })
 }
