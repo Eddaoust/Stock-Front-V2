@@ -33,7 +33,10 @@ import {
 import {
     SUBCATEGORY_CREATE_REQUEST,
     SUBCATEGORY_CREATE_ERROR,
-    SUBCATEGORY_CREATE_SUCCESS
+    SUBCATEGORY_CREATE_SUCCESS,
+    SUBCATEGORY_EDIT_REQUEST,
+    SUBCATEGORY_EDIT_ERROR,
+    SUBCATEGORY_EDIT_SUCCESS
 } from "../actions/subCategories";
 
 const initialState = {
@@ -186,6 +189,25 @@ const reducer = (state = initialState, action) => {
         return {
             ...state,
             product: {loading: false, error: false, data: [...state.category.data]}
+        };
+    }  else if(action.type === SUBCATEGORY_EDIT_REQUEST) {
+        return {
+            ...state,
+            category: {loading: true, error: false, data: [...state.category.data]}
+        };
+    } else if(action.type === SUBCATEGORY_EDIT_ERROR) {
+        return {
+            ...state,
+            category: {loading: false, error: action.data, data: [...state.category.data]}
+        };
+    } else if(action.type === SUBCATEGORY_EDIT_SUCCESS) {
+        const modifiedData = updateSubCategory(state.category.data, action.data);
+        modifiedData.map((subCategory, index) => {
+            state.category.data[index].subCategories = subCategory;
+        });
+        return {
+            ...state,
+            category: {loading: false, error: false, data: [...state.category.data]}
         };
     }
     return state;

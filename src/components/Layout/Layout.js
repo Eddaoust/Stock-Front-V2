@@ -5,6 +5,7 @@ import ProductsContainer from "../../containers/ProductsContainer/ProductsContai
 import CategoryAddContainer from "../../containers/CategoryAddContainer/CategoryAddContainer";
 import CategoryEditContainer from "../../containers/CategoryEditContainer/CategoryEditContainer";
 import SubCategoryAddContainer from "../../containers/SubCategoryAddContainer/SubCategoryAddContainer";
+import SubCategoryEditContainer from "../../containers/SubCategoryEditContainer/SubCategoryEditContainer";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -114,6 +115,17 @@ function Layout(props) {
         })
     }
 
+    function handleSubCategoryEdit(event, subCategory_id, subCategory_name) {
+        event.stopPropagation();
+        props.history.push({
+            pathname: "/app/sub-category/edit",
+            state: {
+                subCategoryId: subCategory_id,
+                subCategoryName: subCategory_name
+            }
+        })
+    }
+
     const drawer = (
         <div>
             <div className={classes.toolbar} />
@@ -166,7 +178,7 @@ function Layout(props) {
                                           selected={subCategory.id === selectedIndex}>
                                     <ListItemText>{subCategory.name}</ListItemText>
                                     <IconButton
-                                        onClick={(event) => handleCategoryEdit(event, subCategory.id, subCategory.name)}
+                                        onClick={(event) => handleSubCategoryEdit(event, subCategory.id, subCategory.name)}
                                         size="small">
                                         <EditIcon fontSize="small"/>
                                     </IconButton>
@@ -251,6 +263,7 @@ function Layout(props) {
                     <Route path="/app/category/add" exact component={CategoryAddContainer}/>
                     <Route path="/app/category/edit" exact component={CategoryEditContainer}/>
                     <Route path="/app/sub-category/add" exact component={SubCategoryAddContainer}/>
+                    <Route path="/app/sub-category/edit" exact component={SubCategoryEditContainer}/>
                     <Route path="/app" component={ProductsContainer}/>
                 </Switch>
             </main>

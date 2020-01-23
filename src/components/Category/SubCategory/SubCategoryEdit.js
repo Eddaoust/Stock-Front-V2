@@ -1,5 +1,5 @@
 import React from "react";
-import classes from './SubCategoryAdd.module.css';
+import classes from './SubCategoryEdit.module.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-function SubCategoryAdd(props) {
+function SubCategoryEdit(props) {
 
     // Add fields error props
     let error = false;
@@ -40,11 +40,11 @@ function SubCategoryAdd(props) {
                             variant="h5"
                             align="center"
                             className={classes.Title}>
-                            Ajouter une sous-catégorie
+                            Modifier une sous-catégorie
                         </Typography>
                         <form onSubmit={event => {
                             event.preventDefault();
-                            props.subCategoryCreate(event, props.user.data.accessToken, props)
+                            props.subCategoryEdit(event, props.user.data.accessToken, props);
                             event.target.querySelectorAll('input')[0].value = ''
                         }}>
                             <TextField
@@ -58,13 +58,14 @@ function SubCategoryAdd(props) {
                                 type="text"
                                 error={error}
                                 helperText={helperText}
+                                defaultValue={props.location.state.subCategoryName}
                             />
                             <Input
-                                name="category_id"
+                                name="subCategory_id"
                                 required
-                                id="user_id"
+                                id="subCategory_id"
                                 type="hidden"
-                                value={props.location.state.categoryId}
+                                value={props.location.state.subCategoryId}
                             />
                             <Button
                                 type="submit"
@@ -73,7 +74,7 @@ function SubCategoryAdd(props) {
                                 color="primary"
                                 className={classes.Button}
                             >
-                                Ajouter
+                                Modifier
                             </Button>
                         </form>
                     </Grid>
@@ -84,4 +85,4 @@ function SubCategoryAdd(props) {
     );
 }
 
-export default SubCategoryAdd;
+export default SubCategoryEdit;

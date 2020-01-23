@@ -72,3 +72,58 @@ export function subCategoryCreateProcess(formValues, token, props) {
             })
     }
 }
+
+export function subCategoryEditRequest() {
+    return {
+        type: SUBCATEGORY_EDIT_REQUEST
+    }
+}
+
+export function subCategoryEditSuccess(response) {
+    return {
+        type: SUBCATEGORY_EDIT_SUCCESS,
+        data: response
+    }
+}
+
+export function subCategoryEditError(error) {
+    return {
+        type: SUBCATEGORY_EDIT_ERROR,
+        data: error
+    }
+}
+
+export function subCategoryEditProcess(formValues, token, props) {
+    return function(dispatch) {
+        dispatch(subCategoryEditRequest())
+        return fetch(`${ROOTURL}/api/sub-category/${formValues.subCategoryId}`, {
+            method: 'PATCH',
+            headers: {
+                ...REQUEST_HEADER,
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(formValues)
+        })
+            .then(res => {
+                if (res.status !== 200) {
+                    const handleError = {
+                        status: res.status,
+                        text: res.statusText,
+                        data: ''
+                    };
+                    res.json()
+                        .then(error => {
+                            handleError.data = error;
+                            console.log(handleError)
+                            dispatch(subCategoryEditError(handleError))
+                        })
+                } else {
+                    res.json()
+                        .then(response => {
+                            dispatch(subCategoryEditSuccess(response))
+                            props.history.push('/app')
+                        });
+                }
+            })
+    }
+}
