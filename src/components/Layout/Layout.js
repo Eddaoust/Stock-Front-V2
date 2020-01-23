@@ -172,19 +172,22 @@ function Layout(props) {
                                     <AddCircleIcon/>
                                 </IconButton>
                             </ListItem>
-                            {category.subCategories.map(subCategory => (
-                                <ListItem button key={subCategory.id}
-                                          onClick={event => handleMenuItemClick(event, subCategory.id)}
-                                          selected={subCategory.id === selectedIndex}>
-                                    <ListItemText>{subCategory.name}</ListItemText>
-                                    <IconButton
-                                        onClick={(event) => handleSubCategoryEdit(event, subCategory.id, subCategory.name)}
-                                        size="small">
-                                        <EditIcon fontSize="small"/>
-                                    </IconButton>
-                                    <IconButton size="small"><DeleteIcon fontSize="small"/></IconButton>
-                                </ListItem>
-                            ))}
+                            {category.subCategories.map(subCategory => {
+                                if (!subCategory.deleted) {
+                                    return (
+                                    <ListItem button key={subCategory.id}
+                                              onClick={event => handleMenuItemClick(event, subCategory.id)}
+                                              selected={subCategory.id === selectedIndex}>
+                                        <ListItemText>{subCategory.name}</ListItemText>
+                                        <IconButton
+                                            onClick={(event) => handleSubCategoryEdit(event, subCategory.id, subCategory.name)}
+                                            size="small">
+                                            <EditIcon fontSize="small"/>
+                                        </IconButton>
+                                        <IconButton size="small"><DeleteIcon fontSize="small"/></IconButton>
+                                    </ListItem>
+                                    )}
+                            })}
                         </List>
                     </div>
                 )): ''}
