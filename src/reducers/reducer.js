@@ -233,7 +233,8 @@ function updateSubCategory(categories, data) {
 function addSubCategory(array, data) {
     return array.map(category => {
         if (category.id === data.parent.id) {
-            category.subCategories.push(data)
+            category.subCategories.push(data);
+            category.subCategories.sort(sortCategory);
         }
     })
 }
