@@ -18,7 +18,9 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const drawerWidth = 240;
 let modalCategory = '';
+let modalSubCategory = '';
 
+//TODO Big refactoring needed!
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -58,6 +60,7 @@ function Layout(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
 
     // Get the user categories on mount
     useEffect(() =>{
@@ -125,6 +128,27 @@ function Layout(props) {
             }
         })
     }
+    // Ouverture modal sub category
+    const handleSubCategoryDeleteModal = (event, subCategoryId, subCategoryName) => {
+        modalSubCategory = {
+            id: subCategoryId,
+            name: subCategoryName
+        };
+        event.stopPropagation();
+        setOpen2(true);
+    };
+
+    // Delete action
+    function deleteSubCategory(subCategoryId, token, props, event) {
+        props.subCategoryDelete(subCategoryId, token, props);
+        handleSubModalClose(event)
+    }
+
+    // Close sub category modal
+    const handleSubModalClose = (event) => {
+        event.stopPropagation();
+        setOpen2(false);
+    };
 
     const drawer = (
         <div>
@@ -184,7 +208,9 @@ function Layout(props) {
                                             size="small">
                                             <EditIcon fontSize="small"/>
                                         </IconButton>
-                                        <IconButton size="small"><DeleteIcon fontSize="small"/></IconButton>
+                                        <IconButton
+                                            onClick={(event) => handleSubCategoryDeleteModal(event, subCategory.id, subCategory.name)}
+                                            size="small"><DeleteIcon fontSize="small"/></IconButton>
                                     </ListItem>
                                     )}
                             })}
@@ -230,6 +256,7 @@ function Layout(props) {
                     </Drawer>
                 </Hidden>
                 <Modal
+                    //Main Category deletion modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                     open={open}
@@ -253,6 +280,36 @@ function Layout(props) {
                             className={classes.button}
                             startIcon={<CancelIcon />}
                             onClick={handleModalClose}
+                        >
+                            Annuler
+                        </Button>
+                    </div>
+                </Modal>
+                <Modal
+                    // Sub Category deletion modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={open2}
+                    onClose={handleSubModalClose}
+                >
+                    <div className={classes.paper}>
+                        <h2 id="simple-modal-title">Supprimer une sous-catégorie</h2>
+                        <p id="simple-modal-description">Voulez vous supprimer la sous-catégorie suivante: <strong>{modalSubCategory.name}</strong></p>
+                        <Button
+                            onClick={(event) => deleteSubCategory(modalSubCategory.id, props.user.data.accessToken, props, event)}
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            startIcon={<DeleteIcon />}
+                        >
+                            Supprimer
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<CancelIcon />}
+                            onClick={handleSubModalClose}
                         >
                             Annuler
                         </Button>

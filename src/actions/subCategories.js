@@ -114,13 +114,65 @@ export function subCategoryEditProcess(formValues, token, props) {
                     res.json()
                         .then(error => {
                             handleError.data = error;
-                            console.log(handleError)
                             dispatch(subCategoryEditError(handleError))
                         })
                 } else {
                     res.json()
                         .then(response => {
                             dispatch(subCategoryEditSuccess(response))
+                            props.history.push('/app')
+                        });
+                }
+            })
+    }
+}
+
+export function subCategoryDeleteRequest() {
+    return {
+        type: SUBCATEGORY_DELETE_REQUEST
+    }
+}
+
+export function subCategoryDeleteSuccess(response) {
+    return {
+        type: SUBCATEGORY_DELETE_SUCCESS,
+        data: response
+    }
+}
+
+export function subCategoryDeleteError(error) {
+    return {
+        type: SUBCATEGORY_DELETE_ERROR,
+        data: error
+    }
+}
+
+export function subCategoryDeleteProcess(subCategoryId, token, props) {
+    return function(dispatch) {
+        dispatch(subCategoryDeleteRequest())
+        return fetch(`${ROOTURL}/api/sub-category/${subCategoryId}`, {
+            method: 'DELETE',
+            headers: {
+                ...REQUEST_HEADER,
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                if (res.status !== 200) {
+                    const handleError = {
+                        status: res.status,
+                        text: res.statusText,
+                        data: ''
+                    };
+                    res.json()
+                        .then(error => {
+                            handleError.data = error;
+                            dispatch(subCategoryDeleteError(handleError))
+                        })
+                } else {
+                    res.json()
+                        .then(response => {
+                            dispatch(subCategoryDeleteSuccess(response))
                             props.history.push('/app')
                         });
                 }

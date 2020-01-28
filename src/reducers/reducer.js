@@ -36,7 +36,10 @@ import {
     SUBCATEGORY_CREATE_SUCCESS,
     SUBCATEGORY_EDIT_REQUEST,
     SUBCATEGORY_EDIT_ERROR,
-    SUBCATEGORY_EDIT_SUCCESS
+    SUBCATEGORY_EDIT_SUCCESS,
+    SUBCATEGORY_DELETE_REQUEST,
+    SUBCATEGORY_DELETE_ERROR,
+    SUBCATEGORY_DELETE_SUCCESS,
 } from "../actions/subCategories";
 
 const initialState = {
@@ -209,12 +212,32 @@ const reducer = (state = initialState, action) => {
             ...state,
             category: {loading: false, error: false, data: [...state.category.data]}
         };
+    } else if(action.type === SUBCATEGORY_DELETE_REQUEST) {
+        return {
+            ...state,
+            category: {loading: true, error: false, data: [...state.category.data]}
+        };
+    } else if(action.type === SUBCATEGORY_DELETE_ERROR) {
+        return {
+            ...state,
+            category: {loading: false, error: action.data, data: [...state.category.data]}
+        };
+    } else if(action.type === SUBCATEGORY_DELETE_SUCCESS) {
+        const modifiedData = deleteSubCategory(state.category.data, action.data);
+        modifiedData.map((subCategory, index) => {
+            state.category.data[index].subCategories = subCategory;
+        });
+        return {
+            ...state,
+            category: {loading: false, error: false, data: [...state.category.data]}
+        };
     }
     return state;
 };
 
 export default reducer;
 
+// STATE MANAGER HELPER
 function updateCategory(categories, data) {
     return categories.map(category => {
         if (category.id === data.id) {
@@ -258,5 +281,17 @@ function addSubCategory(array, data) {
             category.subCategories.push(data);
             category.subCategories.sort(sortCategory);
         }
+    })
+}
+
+function deleteSubCategory(array, data) {
+    return array.map(category => {
+        return category.subCategories.filter(subCategory => {
+            if (subCategory.id === data.id) {
+                return false;
+            } else {
+                return true;
+            }
+        })
     })
 }
