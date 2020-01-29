@@ -51,191 +51,193 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-    if (action.type === LOGIN_REQUEST) {
-        return {
+    switch (action.type) {
+        case LOGIN_REQUEST:
+            return {
+                 ...state,
+                 login: { loading: true, error: false },
+            }
+        case LOGIN_ERROR:
+            return {
+                ...state,
+                login: { loading: false, error: action.data },
+            }
+        case LOGIN_SUCCESS:
+            return {
+                ...state,
+                user: { status: 'auth', data : {accessToken: action.data.token, id: action.data.data.id} },
+                login: { loading: false, error: false },
+            }
+        case LOGIN_CLEAR_ERROR:
+            return {
+                ...state,
+                login: { loading: false, error: false }
+            }
+        case REGISTER_REQUEST:
+            return {
+                ...state,
+                registration: { loading: true, error: false }
+            }
+        case REGISTER_ERROR:
+            return {
+                ...state,
+                registration: { loading: false, error: action.data }
+            }
+        case REGISTER_SUCCESS:
+            return {
+                 ...state,
+                 user: { status: 'reg'},
+                 registration: { loading: false, error: false },
+            }
+        case REGISTER_CLEAR_ERROR:
+            return {
+                ...state,
+                registration: { loading: false, error: false }
+            }
+        case CATEGORY_FETCH_REQUEST:
+            return {
+                ...state,
+                category: {loading: true, error: false, data: false}
+            }
+        case CATEGORY_FETCH_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: action.data, data: false}
+            }
+        case CATEGORY_FETCH_SUCCESS:
+            return {
+                ...state,
+                category: {loading: false, error: false, data: action.data.categories}
+            }
+        case CATEGORY_CREATE_REQUEST:
+            return {
+                ...state,
+                category: {loading: true, error: false, data: [...state.category.data]}
+            }
+        case CATEGORY_CREATE_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: action.data, data: [...state.category.data]}
+            }
+        case CATEGORY_CREATE_SUCCESS:
+            const newCategoryData = [...state.category.data, action.data];
+            newCategoryData.sort(sortCategory);
+            return {
+                 ...state,
+                 category: {loading: false, error: false, data: newCategoryData}
+            }
+        case CATEGORY_EDIT_REQUEST:
+            return {
+                ...state,
+                category: {loading: true, error: false, data: [...state.category.data]}
+            }
+        case CATEGORY_EDIT_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: action.data, data: [...state.category.data]}
+            }
+        case CATEGORY_EDIT_SUCCESS:
+            const modifiedData = updateCategory(state.category.data, action.data);
+            return {
+                 ...state,
+                 category: {loading: false, error: false, data: modifiedData}
+            }
+        case CATEGORY_DELETE_REQUEST:
+            return {
+                ...state,
+                category: {loading: true, error: false, data: [...state.category.data]}
+            }
+        case CATEGORY_DELETE_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: action.data, data: [...state.category.data]}
+            }
+        case CATEGORY_DELETE_SUCCESS:
+             return {
+                ...state,
+                category: {loading: false, error: false, data: state.category.data.filter(item => {
+                     if (item.id === action.data) {
+                         return false;
+                     } else {
+                         return true;
+                     }
+                 })}
+            }
+        case SUBCATEGORY_CREATE_REQUEST:
+            return {
+                ...state,
+                category: {loading: true, error: false, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_CREATE_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: action.data, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_CREATE_SUCCESS:
+            addSubCategory(state.category.data, action.data);
+            return {
+                ...state,
+            }
+        case SUBCATEGORY_EDIT_REQUEST:
+            return {
+                ...state,
+                category: {loading: true, error: false, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_EDIT_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: action.data, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_EDIT_SUCCESS:
+            const modifiedSubData = updateSubCategory(state.category.data, action.data);
+            modifiedSubData.map((subCategory, index) => {
+                state.category.data[index].subCategories = subCategory;
+            })
+            return {
             ...state,
-            login: { loading: true, error: false },
-        };
-    } else if(action.type === LOGIN_ERROR) {
-        return {
-            ...state,
-            login: { loading: false, error: action.data },
-        };
-    } else if(action.type === LOGIN_SUCCESS) {
-        return {
-            ...state,
-            user: { status: 'auth', data : {accessToken: action.data.token, id: action.data.data.id} },
-            login: { loading: false, error: false },
-        };
-    } else if(action.type === LOGIN_CLEAR_ERROR) {
-        return {
-            ...state,
-            login: { loading: false, error: false }
-        };
-    } else if(action.type === REGISTER_REQUEST) {
-        return {
-            ...state,
-            registration: { loading: true, error: false }
-        };
-    } else if(action.type === REGISTER_ERROR) {
-        return {
-            ...state,
-            registration: { loading: false, error: action.data }
-        };
-    } else if(action.type === REGISTER_SUCCESS) {
-        return {
-            ...state,
-            user: { status: 'reg'},
-            registration: { loading: false, error: false },
-        };
-    } else if(action.type === REGISTER_CLEAR_ERROR) {
-        return {
-            ...state,
-            registration: { loading: false, error: false }
-        };
-    } else if(action.type === CATEGORY_FETCH_REQUEST) {
-        return {
-            ...state,
-            category: {loading: true, error: false, data: false}
-        };
-    } else if(action.type === CATEGORY_FETCH_ERROR) {
-        return {
-            ...state,
-            category: {loading: false, error: action.data, data: false}
-        };
-    } else if(action.type === CATEGORY_FETCH_SUCCESS) {
-        return {
-            ...state,
-            category: {loading: false, error: false, data: action.data.categories}
-        };
-    } else if(action.type === CATEGORY_DELETE_REQUEST) {
-        return {
-            ...state,
-            category: {loading: true, error: false, data: [...state.category.data]}
-        };
-    } else if(action.type === CATEGORY_DELETE_ERROR) {
-        return {
-            ...state,
-            category: {loading: false, error: action.data, data: [...state.category.data]}
-        };
-    } else if(action.type === CATEGORY_DELETE_SUCCESS) {
-        return {
-            ...state,
-            category: {loading: false, error: false, data: state.category.data.filter(item => {
-                if (item.id === action.data) {
-                    return false;
-                } else {
-                    return true;
-                }
-                })}
-        };
-    } else if(action.type === CATEGORY_CREATE_REQUEST) {
-        return {
-            ...state,
-            category: {loading: true, error: false, data: [...state.category.data]}
-        };
-    } else if(action.type === CATEGORY_CREATE_ERROR) {
-        return {
-            ...state,
-            category: {loading: false, error: action.data, data: [...state.category.data]}
-        };
-    } else if(action.type === CATEGORY_CREATE_SUCCESS) {
-        const newCategoryData = [...state.category.data, action.data];
-        newCategoryData.sort(sortCategory);
-        return {
-            ...state,
-            category: {loading: false, error: false, data: newCategoryData}
-        };
-    } else if(action.type === CATEGORY_EDIT_REQUEST) {
-        return {
-            ...state,
-            category: {loading: true, error: false, data: [...state.category.data]}
-        };
-    } else if(action.type === CATEGORY_EDIT_ERROR) {
-        return {
-            ...state,
-            category: {loading: false, error: action.data, data: [...state.category.data]}
-        };
-    } else if(action.type === CATEGORY_EDIT_SUCCESS) {
-        const modifiedData = updateCategory(state.category.data, action.data);
-        return {
-            ...state,
-            category: {loading: false, error: false, data: modifiedData}
-        }
-    } else if(action.type === PRODUCTS_FETCH_REQUEST) {
-        return {
-            ...state,
-            product: {loading: true, error: false, data: false}
-        };
-    } else if(action.type === PRODUCTS_FETCH_ERROR) {
-        return {
-            ...state,
-            product: {loading: false, error: action.data, data: false}
-        };
-    } else if(action.type === PRODUCTS_FETCH_SUCCESS) {
-        return {
-            ...state,
-            product: {loading: false, error: false, data: action.data.products}
-        };
-    } else if(action.type === SUBCATEGORY_CREATE_REQUEST) {
-        return {
-            ...state,
-            product: {loading: true, error: false, data: [...state.category.data]}
-        };
-    } else if(action.type === SUBCATEGORY_CREATE_ERROR) {
-        return {
-            ...state,
-            product: {loading: false, error: action.data, data: [...state.category.data]}
-        };
-    } else if(action.type === SUBCATEGORY_CREATE_SUCCESS) {
-        addSubCategory(state.category.data, action.data);
-        return {
-            ...state,
-            product: {loading: false, error: false, data: [...state.category.data]}
-        };
-    }  else if(action.type === SUBCATEGORY_EDIT_REQUEST) {
-        return {
-            ...state,
-            category: {loading: true, error: false, data: [...state.category.data]}
-        };
-    } else if(action.type === SUBCATEGORY_EDIT_ERROR) {
-        return {
-            ...state,
-            category: {loading: false, error: action.data, data: [...state.category.data]}
-        };
-    } else if(action.type === SUBCATEGORY_EDIT_SUCCESS) {
-        const modifiedData = updateSubCategory(state.category.data, action.data);
-        modifiedData.map((subCategory, index) => {
-            state.category.data[index].subCategories = subCategory;
-        });
-        return {
-            ...state,
-            category: {loading: false, error: false, data: [...state.category.data]}
-        };
-    } else if(action.type === SUBCATEGORY_DELETE_REQUEST) {
-        return {
-            ...state,
-            category: {loading: true, error: false, data: [...state.category.data]}
-        };
-    } else if(action.type === SUBCATEGORY_DELETE_ERROR) {
-        return {
-            ...state,
-            category: {loading: false, error: action.data, data: [...state.category.data]}
-        };
-    } else if(action.type === SUBCATEGORY_DELETE_SUCCESS) {
-        const modifiedData = deleteSubCategory(state.category.data, action.data);
-        modifiedData.map((subCategory, index) => {
-            state.category.data[index].subCategories = subCategory;
-        });
-        return {
-            ...state,
-            category: {loading: false, error: false, data: [...state.category.data]}
-        };
+                category: {loading: false, error: false, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_DELETE_REQUEST:
+            return {
+                ...state,
+                category: {loading: true, error: false, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_DELETE_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: action.data, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_DELETE_SUCCESS:
+            const modifiedSubDelData = deleteSubCategory(state.category.data, action.data);
+            modifiedSubDelData.map((subCategory, index) => {
+                state.category.data[index].subCategories = subCategory;
+            })
+            return {
+                ...state,
+                category: {loading: false, error: false, data: [...state.category.data]}
+            }
+        case PRODUCTS_FETCH_REQUEST:
+            return {
+                ...state,
+                product: {loading: true, error: false, data: false}
+            }
+        case PRODUCTS_FETCH_ERROR:
+            return {
+                ...state,
+                product: {loading: false, error: action.data, data: false}
+            }
+        case PRODUCTS_FETCH_SUCCESS:
+            return {
+                ...state,
+                product: {loading: false, error: false, data: action.data.products}
+            }
+        default:
+            return state
     }
-    return state;
 };
 
 export default reducer;
+
 
 // STATE MANAGER HELPER
 function updateCategory(categories, data) {
