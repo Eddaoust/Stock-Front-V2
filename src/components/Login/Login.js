@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
 import { Redirect, Link as RouterLink } from 'react-router-dom';
 import classes from '../Login/Login.module.css';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import {Avatar, Button, TextField, Link, Grid, Typography, CircularProgress} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 //TODO implement front validation on user input
 
