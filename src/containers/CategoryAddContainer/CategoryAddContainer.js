@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import CategoryAdd from "../../components/Category/CategoryAdd";
-import {categoryCreateProcess} from "../../actions/categories";
+import {categoryCreateProcess, categoryClearError} from "../../actions/categories";
 
 const mapStateToProps = state => {
     return {
@@ -14,7 +14,8 @@ const mapDispatchToProps = dispatch => {
         categoryCreate: (event, token, props) => dispatch(categoryCreateProcess({
             name: event.target.querySelectorAll('input')[0].value,
             user_id: event.target.querySelectorAll('input')[1].value,
-        }, token, props))
+        }, token, props)),
+        clearError: () => dispatch(categoryClearError())
     };
 };
 

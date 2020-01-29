@@ -22,6 +22,7 @@ import {
     CATEGORY_DELETE_REQUEST,
     CATEGORY_DELETE_SUCCESS,
     CATEGORY_DELETE_ERROR,
+    CATEGORY_CLEAR_ERROR
     } from '../actions/categories';
 
 import {
@@ -162,6 +163,11 @@ const reducer = (state = initialState, action) => {
                          return true;
                      }
                  })}
+            }
+        case CATEGORY_CLEAR_ERROR:
+            return {
+                ...state,
+                category: {loading: false, error: false, data: [...state.category.data]}
             }
         case SUBCATEGORY_CREATE_REQUEST:
             return {

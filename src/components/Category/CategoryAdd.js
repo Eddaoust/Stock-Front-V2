@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from './CategoryAdd.module.css';
 import {Button, TextField, Input, Paper, Grid, Typography} from '@material-ui/core';
 
 function CategoryAdd(props) {
-
+    useEffect(() => {
+        return () => {
+            props.clearError()
+        }
+    }, [])
     // Add fields error props
     let error = false;
     let helperText = '';

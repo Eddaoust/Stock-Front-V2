@@ -14,6 +14,8 @@ export const CATEGORY_DELETE_REQUEST = 'CATEGORY_DELETE_REQUEST';
 export const CATEGORY_DELETE_SUCCESS = 'CATEGORY_DELETE_SUCCESS';
 export const CATEGORY_DELETE_ERROR = 'CATEGORY_DELETE_ERROR';
 
+export const CATEGORY_CLEAR_ERROR = 'CATEGORY_CLEAR_ERROR';
+
 
 const ROOTURL = 'http://localhost';
 //const ROOTURL = 'https://api.eddaoust.com';
@@ -232,5 +234,11 @@ export function categoryDeleteProcess(categoryId, token, props) {
                         });
                 }
             })
+    }
+}
+
+export function categoryClearError() {
+    return {
+        type: CATEGORY_CLEAR_ERROR
     }
 }
