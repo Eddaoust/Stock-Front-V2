@@ -23,7 +23,7 @@ import {
     CATEGORY_DELETE_SUCCESS,
     CATEGORY_DELETE_ERROR,
     CATEGORY_CLEAR_ERROR
-    } from '../actions/categories';
+} from '../actions/categories';
 
 import {
     PRODUCTS_FETCH_REQUEST,
@@ -41,6 +41,7 @@ import {
     SUBCATEGORY_DELETE_REQUEST,
     SUBCATEGORY_DELETE_ERROR,
     SUBCATEGORY_DELETE_SUCCESS,
+    SUBCATEGORY_CLEAR_ERROR
 } from "../actions/subCategories";
 
 const initialState = {
@@ -55,8 +56,8 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_REQUEST:
             return {
-                 ...state,
-                 login: { loading: true, error: false },
+                ...state,
+                login: { loading: true, error: false },
             }
         case LOGIN_ERROR:
             return {
@@ -86,9 +87,9 @@ const reducer = (state = initialState, action) => {
             }
         case REGISTER_SUCCESS:
             return {
-                 ...state,
-                 user: { status: 'reg'},
-                 registration: { loading: false, error: false },
+                ...state,
+                user: { status: 'reg'},
+                registration: { loading: false, error: false },
             }
         case REGISTER_CLEAR_ERROR:
             return {
@@ -124,8 +125,8 @@ const reducer = (state = initialState, action) => {
             const newCategoryData = [...state.category.data, action.data];
             newCategoryData.sort(sortCategory);
             return {
-                 ...state,
-                 category: {loading: false, error: false, data: newCategoryData}
+                ...state,
+                category: {loading: false, error: false, data: newCategoryData}
             }
         case CATEGORY_EDIT_REQUEST:
             return {
@@ -140,8 +141,8 @@ const reducer = (state = initialState, action) => {
         case CATEGORY_EDIT_SUCCESS:
             const modifiedData = updateCategory(state.category.data, action.data);
             return {
-                 ...state,
-                 category: {loading: false, error: false, data: modifiedData}
+                ...state,
+                category: {loading: false, error: false, data: modifiedData}
             }
         case CATEGORY_DELETE_REQUEST:
             return {
@@ -154,15 +155,15 @@ const reducer = (state = initialState, action) => {
                 category: {loading: false, error: action.data, data: [...state.category.data]}
             }
         case CATEGORY_DELETE_SUCCESS:
-             return {
+            return {
                 ...state,
                 category: {loading: false, error: false, data: state.category.data.filter(item => {
-                     if (item.id === action.data) {
-                         return false;
-                     } else {
-                         return true;
-                     }
-                 })}
+                        if (item.id === action.data) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    })}
             }
         case CATEGORY_CLEAR_ERROR:
             return {
@@ -200,7 +201,7 @@ const reducer = (state = initialState, action) => {
                 state.category.data[index].subCategories = subCategory;
             })
             return {
-            ...state,
+                ...state,
                 category: {loading: false, error: false, data: [...state.category.data]}
             }
         case SUBCATEGORY_DELETE_REQUEST:
@@ -218,6 +219,11 @@ const reducer = (state = initialState, action) => {
             modifiedSubDelData.map((subCategory, index) => {
                 state.category.data[index].subCategories = subCategory;
             })
+            return {
+                ...state,
+                category: {loading: false, error: false, data: [...state.category.data]}
+            }
+        case SUBCATEGORY_CLEAR_ERROR:
             return {
                 ...state,
                 category: {loading: false, error: false, data: [...state.category.data]}

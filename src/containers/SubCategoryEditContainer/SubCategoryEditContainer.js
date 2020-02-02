@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import SubCategoryEdit from '../../components/Category/SubCategory/SubCategoryEdit';
-import {subCategoryEditProcess} from "../../actions/subCategories";
+import {subCategoryClearError, subCategoryEditProcess} from "../../actions/subCategories";
 
 const mapStateToProps = state => {
     return {
@@ -14,7 +14,8 @@ const mapDispatchToProps = dispatch => {
         subCategoryEdit: (event, token, props) => dispatch(subCategoryEditProcess({
             name: event.target.querySelectorAll('input')[0].value,
             subCategoryId: event.target.querySelectorAll('input')[1].value,
-        }, token, props))
+        }, token, props)),
+        clearError: () => dispatch(subCategoryClearError())
     };
 };
 

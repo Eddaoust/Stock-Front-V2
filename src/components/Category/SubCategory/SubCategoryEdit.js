@@ -1,8 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from './SubCategoryEdit.module.css';
 import {Button, TextField, Input, Paper, Grid, Typography} from '@material-ui/core';
 
 function SubCategoryEdit(props) {
+
+    // Clear Error on unmounting
+    useEffect(() => {
+        return () => {
+            props.clearError()
+        }
+    }, [])
 
     // Add fields error props
     let error = false;
