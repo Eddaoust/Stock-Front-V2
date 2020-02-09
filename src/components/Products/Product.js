@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardActions, CardContent, Button, Typography, Grid, makeStyles, CardActionArea, CardMedia} from '@material-ui/core';
+import {Card, CardActions, CardContent, Button, Typography, Grid, makeStyles, CardMedia} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 
 function Product(props) {
@@ -41,7 +41,7 @@ function Product(props) {
                         {product.description}
                     </Typography>
                     <div>
-                        {product.infos.map((info, index) => {
+                        {product.infos.map(info => {
                             let keyTemp = Object.keys(info)[0]
                             return (
                                     <div>{keyTemp}: {info[keyTemp]} </div>

@@ -2,10 +2,11 @@ export const PRODUCTS_FETCH_REQUEST = 'PRODUCTS_REQUEST';
 export const PRODUCTS_FETCH_SUCCESS = 'PRODUCTS_SUCCESS';
 export const PRODUCTS_FETCH_ERROR = 'PRODUCTS_ERROR';
 
-export const FETCH_PRODUCT = 'FETCH_PRODUCT';
-export const CREATE_PRODUCT = 'CREATE_PRODUCT';
-export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
-export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const PRODUCTS_CREATE_REQUEST = 'PRODUCTS_CREATE_REQUEST';
+export const PRODUCTS_CREATE_SUCCESS = 'PRODUCTS_CREATE_SUCCESS';
+export const PRODUCTS_CREATE_ERROR = 'PRODUCTS_CREATE_ERROR';
+
+export const PRODUCT_CLEAR_ERROR = 'PRODUCT_CLEAR_ERROR';
 
 const ROOTURL = 'http://localhost';
 //const ROOTURL = 'https://api.eddaoust.com';
@@ -63,5 +64,63 @@ export function productsFetchProcess(user_id, token) {
                         });
                 }
             })
+    }
+}
+
+export function productCreateRequest() {
+    return {
+        type: PRODUCTS_CREATE_REQUEST
+    }
+}
+
+export function productCreateSuccess(response) {
+    return {
+        type: PRODUCTS_CREATE_SUCCESS,
+        data: response
+    }
+}
+
+export function productCreateError(error) {
+    return {
+        type: PRODUCTS_CREATE_ERROR,
+        data: error
+    }
+}
+
+export function productCreateProcess(user_id, token) {
+    return function(dispatch) {
+        dispatch(productCreateRequest())
+        return fetch(`${ROOTURL}/api/product`, {
+            method: 'POST',
+            headers: {
+                ...REQUEST_HEADER,
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                if (res.status !== 200) {
+                    const handleError = {
+                        status: res.status,
+                        text: res.statusText,
+                        data: ''
+                    };
+                    res.json()
+                        .then(error => {
+                            handleError.data = error;
+                            dispatch(productCreateError(handleError))
+                        })
+                } else {
+                    res.json()
+                        .then(response => {
+                            dispatch(productCreateSuccess(response))
+                        });
+                }
+            })
+    }
+}
+
+export function productClearError() {
+    return {
+        type: PRODUCT_CLEAR_ERROR
     }
 }
