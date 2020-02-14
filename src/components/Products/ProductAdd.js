@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import classes from "../Category/CategoryAdd.module.css";
 import {Button, Grid, Input, Paper, TextField, Typography} from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
@@ -9,6 +9,14 @@ function ProductAdd(props) {
             props.clearError()
         }
     }, [])
+
+    const [infoFields, setInfoFields] = useState([['key-0', 'value-0']]);
+    const addInfoField = () => {
+        if (infoFields.length < 5) {
+            setInfoFields([...infoFields,[`key-${infoFields.length}`, `value-${infoFields.length}`]])
+        }
+    }
+
     // Add fields error props
     let error = false;
     let helperText = '';
@@ -42,7 +50,10 @@ function ProductAdd(props) {
                             className={classes.Title}>
                             Ajouter un produit
                         </Typography>
-                        <form >
+                        <form onSubmit={event => {
+                            event.preventDefault();
+                            props.productCreate(event, props)
+                        }}>
                             <TextField
                                 name="name"
                                 variant="outlined"
@@ -65,24 +76,43 @@ function ProductAdd(props) {
                                 rowsMax={4}
                                 id="description"
                                 label="Description"
-                                autoFocus
-                                type="textarea"
+                                type="text"
                                 error={error}
                                 helperText={helperText}
                             />
+                            {infoFields.map(input => (
+                                <div key={input[0]}>
+                                    <TextField
+                                        variant="outlined"
+                                        label="Nom"
+                                        type="text"
+                                        name={input[0]} />
+                                    <TextField
+                                        variant="outlined"
+                                        label="Valeur"
+                                        type="text"
+                                        name={input[1]} />
+                                </div>
+                            ))}
                             <Input
                                 type="file"
+                                name="image"
+                                variant="outlined"
+                                fullWidth
+                                id="image"
+                                label="Image"
                             />
                             <Rating
                                 name="simple-controlled"
                             />
-                            <Input
-                                name="user_id"
-                                required
-                                id="user_id"
-                                type="hidden"
-                                value={props.user.data.id}
-                            />
+                            <Button
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                onClick={addInfoField}
+                            >
+                                Ajouter un champ
+                            </Button>
                             <Button
                                 type="submit"
                                 fullWidth

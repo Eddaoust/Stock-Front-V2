@@ -87,7 +87,7 @@ export function productCreateError(error) {
     }
 }
 
-export function productCreateProcess(user_id, token) {
+export function productCreateProcess(token, form) {
     return function(dispatch) {
         dispatch(productCreateRequest())
         return fetch(`${ROOTURL}/api/product`, {
@@ -96,6 +96,7 @@ export function productCreateProcess(user_id, token) {
                 ...REQUEST_HEADER,
                 'Authorization': `Bearer ${token}`
             },
+            body: JSON.stringify(form)
         })
             .then(res => {
                 if (res.status !== 200) {

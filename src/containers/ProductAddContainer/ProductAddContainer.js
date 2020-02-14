@@ -13,6 +13,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        productCreate: (e, props) => dispatch(productCreateProcess(props.user.data.accessToken, {
+            name: e.target.querySelectorAll('input')[0].value,
+            description: e.target.querySelectorAll('textarea')[0].value,
+            image: e.target.querySelectorAll('input')[1].files[0],
+        })),
         clearError: () => dispatch(productClearError())
     };
 };
