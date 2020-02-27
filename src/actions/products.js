@@ -89,6 +89,7 @@ export function productCreateError(error) {
 
 export function productCreateProcess(token, form) {
     return function(dispatch) {
+        console.log(form)
         dispatch(productCreateRequest())
         return fetch(`${ROOTURL}/api/product`, {
             method: 'POST',

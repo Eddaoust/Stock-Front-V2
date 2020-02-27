@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Input, Paper, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Container} from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
+import CategorySelectInput from "./CategorySelectInput";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -24,36 +25,13 @@ function ProductAdd(props) {
         }
     }, [])
 
-    const classes = useStyles();
-
-
-    const inputLabel = useRef(null);
-    const [labelWidth, setLabelWidth] = useState(0);
-    React.useEffect(() => {
-        setLabelWidth(inputLabel.current.offsetWidth);
-    }, []);
-
-    // Focus the selected option
-    const [infoSelected, setInfoSelected] = useState('');
-    const handleChange = event => {
-        setInfoSelected(event.target.value);
-    };
-
-    // Build the nested option list
-    const menuItemsList = [];
-    if (props.category.data) {
-        props.category.data.map(category => {
-            menuItemsList.push(<MenuItem key={category.id} disabled>{category.name}</MenuItem>)
-            if (category.subCategories) {
-                category.subCategories.map(subCategory => {
-                    menuItemsList.push(<MenuItem key={subCategory.id} value={subCategory.id} className={classes.nested}>{subCategory.name}</MenuItem>)
-                })
-            }
-        })
-    } else {
-        menuItemsList.push(<MenuItem disabled>Create a category...</MenuItem> )
+    // Get the value of the select component
+    let categoryValue = '';
+    const getCategoryValue = value => {
+        categoryValue = value
     }
 
+    const classes = useStyles();
 
     // Add info fields
     const [infoFields, setInfoFields] = useState([['key-0', 'value-0']]);
@@ -62,7 +40,6 @@ function ProductAdd(props) {
             setInfoFields([...infoFields,[`key-${infoFields.length}`, `value-${infoFields.length}`]])
         }
     };
-
 
     // Add fields error props
     let error = false;
@@ -98,8 +75,8 @@ function ProductAdd(props) {
                             Ajouter un produit
                         </Typography>
                         <form onSubmit={event => {
-                            event.preventDefault();
-                            props.productCreate(event, props)
+                            event.preventDefault()
+                            props.productCreate(event, props, infoFields, categoryValue)
                         }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
@@ -141,6 +118,7 @@ function ProductAdd(props) {
                                                     variant="outlined"
                                                     label="Nom"
                                                     type="text"
+                                                    id={input[0]}
                                                     name={input[0]} />
                                             </Grid>
                                             <Grid item xs={5}>
@@ -148,6 +126,7 @@ function ProductAdd(props) {
                                                     variant="outlined"
                                                     label="Valeur"
                                                     type="text"
+                                                    id={input[1]}
                                                     name={input[1]} />
                                             </Grid>
                                         </Grid>
@@ -167,26 +146,17 @@ function ProductAdd(props) {
                                 <Grid item xs={6}>
                                     {/* If category data is empty, display a create category button */}
                                     {props.category.data ? (
-                                        <FormControl variant="outlined" className={classes.formControl}>
-                                            <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
-                                                Infos Complémentaires
-                                            </InputLabel>
-                                            <Select
-                                                labelWidth={labelWidth}
-                                                value={infoSelected}
-                                                onChange={handleChange}
-
-                                            >
-                                                {menuItemsList}
-                                            </Select>
-                                        </FormControl>
+                                        <CategorySelectInput
+                                            category={props.category}
+                                            categoryValue={getCategoryValue}
+                                        />
                                     ): (
                                         <Button>Créer une Catégorie</Button>
                                     )}
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Rating
-                                        name="simple-controlled"
+                                        name="rating"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -199,6 +169,13 @@ function ProductAdd(props) {
                                         label="Image"
                                     />
                                 </Grid>
+                                <Input
+                                    name="user_id"
+                                    required
+                                    id="user_id"
+                                    type="hidden"
+                                    value={props.user.data.id}
+                                />
                                 <Grid item xs={12}>
                                     <Button
                                         type="submit"
