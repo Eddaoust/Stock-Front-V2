@@ -1,6 +1,6 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import {Button, Grid, Input, Paper, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Container} from "@material-ui/core";
+import {Button, Grid, Input, Paper, TextField, Typography} from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
 import CategorySelectInput from "./CategorySelectInput";
 
@@ -32,6 +32,8 @@ function ProductAdd(props) {
     }
 
     const classes = useStyles();
+
+    const [rating, setRating] = useState(0);
 
     // Add info fields
     const [infoFields, setInfoFields] = useState([['key-0', 'value-0']]);
@@ -76,7 +78,7 @@ function ProductAdd(props) {
                         </Typography>
                         <form onSubmit={event => {
                             event.preventDefault()
-                            props.productCreate(event, props, infoFields, categoryValue)
+                            props.productCreate(event, props, infoFields, categoryValue, rating)
                         }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
@@ -157,6 +159,11 @@ function ProductAdd(props) {
                                 <Grid item xs={12}>
                                     <Rating
                                         name="rating"
+                                        id="rating"
+                                        value={rating}
+                                        onChange={(event, newValue) => {
+                                            setRating(newValue);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>

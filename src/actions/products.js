@@ -88,16 +88,22 @@ export function productCreateError(error) {
 }
 
 export function productCreateProcess(token, form) {
+    let formData = new FormData()
+    formData.append('name', form.name)
+    formData.append('description', form.description)
+    formData.append('infos', JSON.stringify(form.infos))
+    formData.append('rating', form.rating)
+    formData.append('subcategory_id', form.subcategory_id)
+    formData.append('user_id', form.user_id)
+    formData.append('image', form.image)
     return function(dispatch) {
-        console.log(form)
         dispatch(productCreateRequest())
         return fetch(`${ROOTURL}/api/product`, {
             method: 'POST',
             headers: {
-                ...REQUEST_HEADER,
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
             },
-            body: JSON.stringify(form)
+            body: formData
         })
             .then(res => {
                 if (res.status !== 200) {

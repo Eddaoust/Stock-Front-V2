@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        productCreate: (e, props, infoFields, infoSelected) => {
+        productCreate: (e, props, infoFields, infoSelected, rating) => {
             let infos = []
             infoFields.map(field => {
                 let info = {}
@@ -25,10 +25,10 @@ const mapDispatchToProps = dispatch => {
                 name: e.target.querySelector('#name').value,
                 description: e.target.querySelector('#description').value,
                 infos: infos,
-                rating: 4,
+                rating: rating,
                 subcategory_id: infoSelected,
                 user_id: e.target.querySelector('#user_id').value,
-                //image: e.target.querySelectorAll('input')[1].files[0],
+                image: e.target.querySelector('#image').files[0],
             }
         ))},
         clearError: () => dispatch(productClearError())
