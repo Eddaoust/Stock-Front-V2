@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => {
                 infos.push(info)
             })
 
-            dispatch(productCreateProcess(props.user.data.accessToken, {
+            dispatch(productCreateProcess(props, props.user.data.accessToken, {
                 name: e.target.querySelector('#name').value,
                 description: e.target.querySelector('#description').value,
                 infos: infos,

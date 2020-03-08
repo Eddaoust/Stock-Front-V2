@@ -28,7 +28,10 @@ import {
 import {
     PRODUCTS_FETCH_REQUEST,
     PRODUCTS_FETCH_ERROR,
-    PRODUCTS_FETCH_SUCCESS
+    PRODUCTS_FETCH_SUCCESS,
+    PRODUCTS_CREATE_REQUEST,
+    PRODUCTS_CREATE_ERROR,
+    PRODUCTS_CREATE_SUCCESS
 } from "../actions/products";
 
 import {
@@ -242,6 +245,22 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 product: {loading: false, error: false, data: action.data.products}
+            }
+        case PRODUCTS_CREATE_REQUEST:
+            return {
+                ...state,
+                product: {loading: true, error: false, data: [...state.product.data]}
+            }
+        case PRODUCTS_CREATE_ERROR:
+            return {
+                ...state,
+                product: {loading: false, error: action.data, data: [...state.product.data]}
+            }
+        case PRODUCTS_CREATE_SUCCESS:
+            const newProducts = [...state.product.data, action.data]
+            return {
+                ...state,
+                product: {loading: false, error: false, data: newProducts}
             }
         default:
             return state

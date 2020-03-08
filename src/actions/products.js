@@ -87,7 +87,7 @@ export function productCreateError(error) {
     }
 }
 
-export function productCreateProcess(token, form) {
+export function productCreateProcess(props, token, form) {
     let formData = new FormData()
     formData.append('name', form.name)
     formData.append('description', form.description)
@@ -121,6 +121,7 @@ export function productCreateProcess(token, form) {
                     res.json()
                         .then(response => {
                             dispatch(productCreateSuccess(response))
+                            props.history.push('/app')
                         });
                 }
             })

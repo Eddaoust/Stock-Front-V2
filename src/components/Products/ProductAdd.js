@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import {Button, Grid, Input, Paper, TextField, Typography} from "@material-ui/core";
-import Rating from '@material-ui/lab/Rating';
 import CategorySelectInput from "./CategorySelectInput";
+import RatingInput from "./RatingInput";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -31,9 +31,12 @@ function ProductAdd(props) {
         categoryValue = value
     }
 
-    const classes = useStyles();
+    let ratingValue = '';
+    const getRatingValue = value => {
+        ratingValue = value
+    }
 
-    const [rating, setRating] = useState(0);
+    const classes = useStyles();
 
     // Add info fields
     const [infoFields, setInfoFields] = useState([['key-0', 'value-0']]);
@@ -78,7 +81,7 @@ function ProductAdd(props) {
                         </Typography>
                         <form onSubmit={event => {
                             event.preventDefault()
-                            props.productCreate(event, props, infoFields, categoryValue, rating)
+                            props.productCreate(event, props, infoFields, categoryValue, ratingValue)
                         }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
@@ -157,13 +160,8 @@ function ProductAdd(props) {
                                     )}
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Rating
-                                        name="rating"
-                                        id="rating"
-                                        value={rating}
-                                        onChange={(event, newValue) => {
-                                            setRating(newValue);
-                                        }}
+                                    <RatingInput
+                                        ratingValue={getRatingValue}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -199,7 +197,6 @@ function ProductAdd(props) {
                     </Grid>
                 </Grid>
             </Paper>
-
         </div>
     );
 }
