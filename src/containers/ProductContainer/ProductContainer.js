@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 const mapStateToProps = state => {
     return {
         user: state.user,
+        product_path: state.product_path
     };
 };
 

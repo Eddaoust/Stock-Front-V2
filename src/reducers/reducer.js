@@ -52,7 +52,8 @@ const initialState = {
     login: { loading: false, error: false },
     registration: { loading: false, error: false },
     category: {loading: false, error: false, data: false},
-    product: {loading: false, error: false, data: false}
+    product: {loading: false, error: false, data: false},
+    product_path: 'http://localhost/image/product/'
 };
 
 const reducer = (state = initialState, action) => {
