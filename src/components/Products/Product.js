@@ -27,7 +27,7 @@ function Product(props) {
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.media}
-                    image={product.image}
+                    image={props.product_path + product.image}
                     title="product image"
                 />
                 <CardContent>

@@ -43,7 +43,7 @@ function Products(props) {
                                     <CardActionArea>
                                         <CardMedia
                                             className={classes.media}
-                                            image={item.image}
+                                            image={props.product_path + item.image}
                                             title="product image"
                                         />
                                     </CardActionArea>
@@ -70,7 +70,7 @@ function Products(props) {
                             <CardActionArea>
                                 <CardMedia
                                     className={classes.media}
-                                    image={item.image}
+                                    image={props.product_path + item.image}
                                     title="product image"
                                 />
                             </CardActionArea>
