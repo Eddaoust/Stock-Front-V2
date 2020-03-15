@@ -8,6 +8,7 @@ import SubCategoryAddContainer from "../../containers/SubCategoryAddContainer/Su
 import SubCategoryEditContainer from "../../containers/SubCategoryEditContainer/SubCategoryEditContainer";
 import ProductContainer from "../../containers/ProductContainer/ProductContainer";
 import ProductAddContainer from "../../containers/ProductAddContainer/ProductAddContainer";
+import ProductEditContainer from "../../containers/ProductEditContainer/ProductEditContainer";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -328,6 +329,7 @@ function Layout(props) {
                     <Route path="/app/sub-category/edit" exact component={SubCategoryEditContainer}/>
                     <Route path="/app/product/show" exact component={ProductContainer}/>
                     <Route path="/app/product/add" exact component={ProductAddContainer}/>
+                    <Route path="/app/product/edit" exact component={ProductEditContainer}/>
                     <Route path="/app" component={ProductsContainer}/>
                 </Switch>
             </main>

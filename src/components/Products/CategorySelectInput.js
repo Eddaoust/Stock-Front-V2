@@ -25,8 +25,10 @@ function CategorySelectInput(props) {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
+    // Get the previous subCategories value on edit product action
+    let defaultValue = props.productSubCategory ? props.productSubCategory : '';
     // Focus the selected option
-    const [infoSelected, setInfoSelected] = useState('');
+    const [infoSelected, setInfoSelected] = useState(defaultValue);
     const handleChange = event => {
         setInfoSelected(event.target.value);
         props.categoryValue(event.target.value);
@@ -44,13 +46,13 @@ function CategorySelectInput(props) {
             }
         })
     } else {
-        menuItemsList.push(<MenuItem disabled>Create a category...</MenuItem> )
+        menuItemsList.push(<MenuItem disabled>Créer une sous-catégorie...</MenuItem> )
     }
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
-                Infos Complémentaires
+            <InputLabel ref={inputLabel} id="subCategories">
+                Sous-catégories
             </InputLabel>
             <Select
                 labelWidth={labelWidth}

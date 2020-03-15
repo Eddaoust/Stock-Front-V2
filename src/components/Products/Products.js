@@ -2,6 +2,9 @@ import React, {useEffect} from 'react';
 import {Card, CardActions, CardContent, Button, Typography, Grid, makeStyles, CardActionArea, CardMedia} from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
 import Rating from '@material-ui/lab/Rating';
+import EditIcon from '@material-ui/icons/Edit';
+
+
 
 function Products(props) {
 
@@ -24,6 +27,16 @@ function Products(props) {
         const product = props.product.data.find(item => item.id === productId);
         props.history.push({
             pathname: "/app/product/show",
+            state: {
+                product: product
+            }
+        })
+    }
+
+    function handleProductEdit(productId) {
+        const product = props.product.data.find(item => item.id === productId);
+        props.history.push({
+            pathname: "/app/product/edit",
             state: {
                 product: product
             }
@@ -59,6 +72,9 @@ function Products(props) {
                                     <CardActions>
                                         <Button onClick={() => handleProductShow(item.id)} size="small">Show more</Button>
                                     </CardActions>
+                                    <CardActions>
+                                        <Button onClick={() => handleProductEdit(item.id)} size="small"><EditIcon/></Button>
+                                    </CardActions>
                                 </Card>
                             </Grid>
                         )
@@ -85,6 +101,9 @@ function Products(props) {
                             </CardContent>
                             <CardActions>
                                 <Button onClick={() => handleProductShow(item.id)} size="small">Show more</Button>
+                            </CardActions>
+                            <CardActions>
+                                <Button onClick={() => handleProductEdit(item.id)} size="small"><EditIcon/></Button>
                             </CardActions>
                         </Card>
                     </Grid>
