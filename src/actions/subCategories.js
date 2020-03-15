@@ -12,7 +12,7 @@ export const SUBCATEGORY_DELETE_ERROR = 'SUBCATEGORY_DELETE_ERROR';
 
 export const SUBCATEGORY_CLEAR_ERROR = 'SUBCATEGORY_CLEAR_ERROR';
 
-const ROOTURL = 'http://localhost';
+const ROOTURL = 'http://localhost:8888';
 //const ROOTURL = 'https://api.eddaoust.com';
 const REQUEST_HEADER = {
     'Content-Type': 'application/json',

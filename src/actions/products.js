@@ -8,7 +8,7 @@ export const PRODUCTS_CREATE_ERROR = 'PRODUCTS_CREATE_ERROR';
 
 export const PRODUCT_CLEAR_ERROR = 'PRODUCT_CLEAR_ERROR';
 
-const ROOTURL = 'http://localhost';
+const ROOTURL = 'http://localhost:8888';
 //const ROOTURL = 'https://api.eddaoust.com';
 const REQUEST_HEADER = {
     'Content-Type': 'application/json',
