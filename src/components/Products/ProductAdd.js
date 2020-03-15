@@ -29,12 +29,12 @@ function ProductAdd(props) {
     let categoryValue = '';
     const getCategoryValue = value => {
         categoryValue = value
-    }
-
+    };
+    // Get the value of the rating component
     let ratingValue = '';
     const getRatingValue = value => {
         ratingValue = value
-    }
+    };
 
     const classes = useStyles();
 
@@ -84,7 +84,7 @@ function ProductAdd(props) {
                             props.productCreate(event, props, infoFields, categoryValue, ratingValue)
                         }}>
                             <Grid container spacing={2}>
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <TextField
                                         name="name"
                                         variant="outlined"
@@ -98,7 +98,7 @@ function ProductAdd(props) {
                                         helperText={helperText}
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <TextField
                                         name="description"
                                         variant="outlined"
@@ -116,9 +116,9 @@ function ProductAdd(props) {
                                 </Grid>
 
                                 {infoFields.map(input => (
-                                    <Grid item xs={10}>
+                                    <Grid item key={Math.random().toString(36).substr(2, 9)} xs={10}>
                                         <Grid container spacing={2} key={input[0]}>
-                                            <Grid item xs={5}>
+                                            <Grid item key={Math.random().toString(36).substr(2, 9)} xs={5}>
                                                 <TextField
                                                     variant="outlined"
                                                     label="Nom"
@@ -126,7 +126,7 @@ function ProductAdd(props) {
                                                     id={input[0]}
                                                     name={input[0]} />
                                             </Grid>
-                                            <Grid item xs={5}>
+                                            <Grid item key={Math.random().toString(36).substr(2, 9)} xs={5}>
                                                 <TextField
                                                     variant="outlined"
                                                     label="Valeur"
@@ -138,7 +138,7 @@ function ProductAdd(props) {
                                     </Grid>
 
                                 ))}
-                                <Grid item xs={2}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={2}>
                                     <Button
                                         type="button"
                                         variant="contained"
@@ -148,7 +148,7 @@ function ProductAdd(props) {
                                         Ajouter un champ
                                     </Button>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={6}>
                                     {/* If category data is empty, display a create category button */}
                                     {props.category.data ? (
                                         <CategorySelectInput
@@ -159,12 +159,12 @@ function ProductAdd(props) {
                                         <Button>Créer une Catégorie</Button>
                                     )}
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <RatingInput
                                         ratingValue={getRatingValue}
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <Input
                                         type="file"
                                         name="image"
@@ -180,8 +180,9 @@ function ProductAdd(props) {
                                     id="user_id"
                                     type="hidden"
                                     value={props.user.data.id}
+                                    key={Math.random().toString(36).substr(2, 9)}
                                 />
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <Button
                                         type="submit"
                                         fullWidth

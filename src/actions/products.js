@@ -6,6 +6,10 @@ export const PRODUCTS_CREATE_REQUEST = 'PRODUCTS_CREATE_REQUEST';
 export const PRODUCTS_CREATE_SUCCESS = 'PRODUCTS_CREATE_SUCCESS';
 export const PRODUCTS_CREATE_ERROR = 'PRODUCTS_CREATE_ERROR';
 
+export const PRODUCTS_EDIT_REQUEST = 'PRODUCTS_EDIT_REQUEST';
+export const PRODUCTS_EDIT_SUCCESS = 'PRODUCTS_EDIT_SUCCESS';
+export const PRODUCTS_EDIT_ERROR = 'PRODUCTS_EDIT_ERROR';
+
 export const PRODUCT_CLEAR_ERROR = 'PRODUCT_CLEAR_ERROR';
 
 const ROOTURL = 'http://localhost:8888';
@@ -121,6 +125,67 @@ export function productCreateProcess(props, token, form) {
                     res.json()
                         .then(response => {
                             dispatch(productCreateSuccess(response))
+                            props.history.push('/app')
+                        });
+                }
+            })
+    }
+}
+
+export function productEditRequest() {
+    return {
+        type: PRODUCTS_EDIT_REQUEST
+    }
+}
+
+export function productEditSuccess(response) {
+    return {
+        type: PRODUCTS_EDIT_SUCCESS,
+        data: response
+    }
+}
+
+export function productEditError(error) {
+    return {
+        type: PRODUCTS_EDIT_ERROR,
+        data: error
+    }
+}
+
+export function productEditProcess(props, token, form, productId) {
+    let formData = new FormData()
+    formData.append('name', form.name)
+    formData.append('description', form.description)
+    formData.append('infos', JSON.stringify(form.infos))
+    formData.append('rating', form.rating)
+    formData.append('subcategory_id', form.subcategory_id)
+    formData.append('user_id', form.user_id)
+    formData.append('image', form.image)
+    return function(dispatch) {
+        dispatch(productEditRequest())
+        return fetch(`${ROOTURL}/api/product/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: formData
+        })
+            .then(res => {
+                if (res.status !== 200) {
+                    const handleError = {
+                        status: res.status,
+                        text: res.statusText,
+                        data: ''
+                    };
+                    res.json()
+                        .then(error => {
+                            handleError.data = error;
+                            dispatch(productEditError(handleError))
+                        })
+                } else {
+                    res.json()
+                        .then(response => {
+                            dispatch(productEditSuccess(response))
                             props.history.push('/app')
                         });
                 }

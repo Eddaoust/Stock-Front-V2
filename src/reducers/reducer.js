@@ -31,7 +31,10 @@ import {
     PRODUCTS_FETCH_SUCCESS,
     PRODUCTS_CREATE_REQUEST,
     PRODUCTS_CREATE_ERROR,
-    PRODUCTS_CREATE_SUCCESS
+    PRODUCTS_CREATE_SUCCESS,
+    PRODUCTS_EDIT_REQUEST,
+    PRODUCTS_EDIT_ERROR,
+    PRODUCTS_EDIT_SUCCESS
 } from "../actions/products";
 
 import {
@@ -262,6 +265,28 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 product: {loading: false, error: false, data: newProducts}
+            }
+        case PRODUCTS_EDIT_REQUEST:
+            return {
+                ...state,
+                product: {loading: true, error: false, data: [...state.product.data]}
+            }
+        case PRODUCTS_EDIT_ERROR:
+            return {
+                ...state,
+                product: {loading: false, error: action.data, data: [...state.product.data]}
+            }
+        case PRODUCTS_EDIT_SUCCESS:
+            const newProduct = state.product.data.map(item => {
+                if (item.id === action.data.id) {
+                    return action.data;
+                }
+                return item;
+            });
+            // TODO this is useless because the state is request all product everytime, need to fix this
+            return {
+                ...state,
+                product: {loading: false, error: false, data: [...state.product.data, newProduct]}
             }
         default:
             return state

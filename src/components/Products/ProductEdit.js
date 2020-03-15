@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+//TODO add button to delete product image
 function ProductEdit(props) {
     // Clear error on unmount
     useEffect(() => {
@@ -31,7 +32,7 @@ function ProductEdit(props) {
     // The product object to edit
     const product = props.location.state.product;
     // Get the value of the select component
-    let categoryValue = product.subCategory;
+    let categoryValue = product.subCategory.id;
     const getCategoryValue = value => {
         categoryValue = value
     };
@@ -91,10 +92,10 @@ function ProductEdit(props) {
                         </Typography>
                         <form onSubmit={event => {
                             event.preventDefault()
-                            //props.productCreate(event, props, infoFields, categoryValue, ratingValue)
+                            props.productEdit(event, props, infoFields, categoryValue, ratingValue, product.id)
                         }}>
                             <Grid container spacing={2}>
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <TextField
                                         name="name"
                                         variant="outlined"
@@ -106,10 +107,10 @@ function ProductEdit(props) {
                                         type="text"
                                         error={error}
                                         helperText={helperText}
-                                        value={product.name}
+                                        defaultValue={product.name}
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <TextField
                                         name="description"
                                         variant="outlined"
@@ -123,38 +124,38 @@ function ProductEdit(props) {
                                         type="text"
                                         error={error}
                                         helperText={helperText}
-                                        value={product.description}
+                                        defaultValue={product.description}
                                     />
                                 </Grid>
 
                                 {infoFields.map((input, index) => (
-                                    <Grid item xs={10}>
+                                    <Grid item key={Math.random().toString(36).substr(2, 9)} xs={10}>
                                         <Grid container spacing={2} key={input[0]}>
-                                            <Grid item xs={5}>
+                                            <Grid item key={Math.random().toString(36).substr(2, 9)} xs={5}>
                                                 <TextField
                                                     variant="outlined"
                                                     label="Nom"
                                                     type="text"
                                                     id={input[0]}
                                                     name={input[0]}
-                                                    value={infosKeys[index] ? infosKeys[index][0] : ''}
+                                                    defaultValue={infosKeys[index] ? infosKeys[index][0] : ''}
                                                 />
                                             </Grid>
-                                            <Grid item xs={5}>
+                                            <Grid item key={Math.random().toString(36).substr(2, 9)} xs={5}>
                                                 <TextField
                                                     variant="outlined"
                                                     label="Valeur"
                                                     type="text"
                                                     id={input[1]}
                                                     name={input[1]}
-                                                    value={infosKeys[index] ? product.infos[index][infosKeys[index][0]] : ''}
+                                                    defaultValue={infosKeys[index] ? product.infos[index][infosKeys[index][0]] : ''}
                                                 />
                                             </Grid>
                                         </Grid>
                                     </Grid>
 
                                 ))}
-                                <Grid item xs={2}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={2}>
                                     <Button
                                         type="button"
                                         variant="contained"
@@ -164,7 +165,7 @@ function ProductEdit(props) {
                                         Ajouter un champ
                                     </Button>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={6}>
                                     {/* If category data is empty, display a create category button */}
                                     {props.category.data ? (
                                         <CategorySelectInput
@@ -176,13 +177,13 @@ function ProductEdit(props) {
                                         <Button>Créer une Catégorie</Button>
                                     )}
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <RatingInput
                                         ratingValue={getRatingValue}
                                         productRating={product.rating}
                                     />
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={6}>
                                     <Input
                                         type="file"
                                         name="image"
@@ -192,7 +193,7 @@ function ProductEdit(props) {
                                         label="Image"
                                     />
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={6}>
                                     <img
                                         src={props.product_path + product.image}
                                         alt="product image"
@@ -205,8 +206,9 @@ function ProductEdit(props) {
                                     id="user_id"
                                     type="hidden"
                                     value={props.user.data.id}
+                                    key={Math.random().toString(36).substr(2, 9)}
                                 />
-                                <Grid item xs={12}>
+                                <Grid item key={Math.random().toString(36).substr(2, 9)} xs={12}>
                                     <Button
                                         type="submit"
                                         fullWidth

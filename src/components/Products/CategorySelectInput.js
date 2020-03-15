@@ -48,7 +48,7 @@ function CategorySelectInput(props) {
     } else {
         menuItemsList.push(<MenuItem disabled>Créer une sous-catégorie...</MenuItem> )
     }
-
+    //TODO The field value reset on adding new fields group
     return (
         <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel ref={inputLabel} id="subCategories">
