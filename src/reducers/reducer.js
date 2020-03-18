@@ -56,7 +56,8 @@ const initialState = {
     registration: { loading: false, error: false },
     category: {loading: false, error: false, data: false},
     product: {loading: false, error: false, data: false},
-    product_path: 'http://localhost/image/product/'
+    product_path: 'http://localhost:8888/image/product/'
+    //product_path: 'https://api.eddaoust.com/image/product/'
 };
 
 const reducer = (state = initialState, action) => {
