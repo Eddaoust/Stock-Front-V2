@@ -81,12 +81,14 @@ class Login extends Component {
                                 </Button>
                                 <Grid container>
                                     <Grid item xs>
-                                        <Link href="#" variant="body2">
+                                        <Link href="#" variant="body2" underline="none">
                                             Mot de passe oublié?
                                         </Link>
                                     </Grid>
                                     <Grid item>
-                                        <RouterLink to="/registration">Créer un compte</RouterLink>
+                                        <Link variant="body2" underline="none">
+                                            <RouterLink className={classes.Link} to="/registration">Créer un compte</RouterLink>
+                                        </Link>
                                     </Grid>
                                 </Grid>
                             </form>

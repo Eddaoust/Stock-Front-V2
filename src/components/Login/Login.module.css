@@ -26,6 +26,16 @@
 
 .Submit {
     margin-top: 16px !important;
+    margin-bottom: 8px !important;
+}
+
+.Link {
+    text-decoration: none;
+    text-underline: none;
+}
+
+.Link:visited {
+    color: inherit;
 }
 
 
