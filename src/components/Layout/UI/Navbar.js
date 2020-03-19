@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import {Typography, IconButton, Toolbar, AppBar, Icon} from '@material-ui/core';
+import {Typography, IconButton, Toolbar, AppBar, Icon, SvgIcon} from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -25,6 +25,8 @@ const useStyles = makeStyles(theme => ({
     },
     iconRoot: {
         textAlign: 'center',
+        width: 35,
+        height: 35,
     }
 }));
 
@@ -46,7 +48,7 @@ function Navbar(props) {
                     <MenuIcon />
                 </IconButton>
                 <Icon className={classes.iconRoot}>
-                    <img className={classes.imageIcon} src="/image/wool-ball.svg"/>
+                    <img className={classes.imageIcon} src="/image/wool-ball-color.png"/>
                 </Icon>
                 <Typography variant="h6" noWrap color="primary">
                     TidyDO
