@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classes from '../Registration/Registration.module.css';
 import { Redirect, Link as RouterLink } from 'react-router-dom';
-import {Avatar, Button, TextField, Grid, Typography, Container, CircularProgress} from '@material-ui/core';
+import {Avatar, Button, TextField, Grid, Typography, Container, CircularProgress, Link} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 class Registration extends Component {
@@ -135,7 +135,9 @@ class Registration extends Component {
                             </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <RouterLink to="/">Vous avez déja un compte? Connectez vous</RouterLink>
+                                    <Link variant="body2" underline="none">
+                                        <RouterLink className={classes.Link} to="/">Vous avez déja un compte? Connectez vous</RouterLink>
+                                    </Link>
                                 </Grid>
                             </Grid>
                         </form>
