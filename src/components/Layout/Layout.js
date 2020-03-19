@@ -12,8 +12,7 @@ import ProductEditContainer from "../../containers/ProductEditContainer/ProductE
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal, Button} from '@material-ui/core'
-import MailIcon from '@material-ui/icons/Mail';
+import {Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemText, Modal, Button} from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -44,7 +43,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: 64
     },
     nested: {
-        paddingLeft: theme.spacing(4),
+        paddingLeft: theme.spacing(3),
     },
     paper: {
         position: 'absolute',
@@ -54,6 +53,29 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    link: {
+        textDecoration: 'none',
+        textUnderline: 'none',
+        color: theme.palette.primary,
+        '&:visited': {
+            color: '#2C58B5 !important'
+        },
+        '&:hover': {
+            color: '#42CAA4 !important'
+        }
+    },
+    addSubCategory: {
+        fontSize: 11,
+    },
+    addSubCatWrapper: {
+        paddingLeft: 0
+    },
+    mainCategory: {
+        fontSize: 20,
+    },
+    mainCatWrapper: {
+        borderBottom: '1px solid #42CAA4'
+    }
 }));
 
 function Layout(props) {
@@ -159,16 +181,13 @@ function Layout(props) {
             <Divider/>
             <List>
                 <ListItem>
-                    <ListItemIcon><MailIcon /></ListItemIcon>
-                    <ListItemText><Link to="/app/category/add">Ajouter une catégorie</Link></ListItemText>
+                    <ListItemText><Link className={classes.link} to="/app/category/add">Ajouter une catégorie</Link></ListItemText>
                 </ListItem>
                 <ListItem>
-                    <ListItemIcon><MailIcon /></ListItemIcon>
-                    <ListItemText><Link to='/app/product/add'>Ajouter un produit</Link></ListItemText>
+                    <ListItemText><Link className={classes.link} to='/app/product/add'>Ajouter un produit</Link></ListItemText>
                 </ListItem>
                 <ListItem>
-                    <ListItemIcon><MailIcon /></ListItemIcon>
-                    <ListItemText><Link to='/app'>Toutes les catégories</Link></ListItemText>
+                    <ListItemText><Link className={classes.link} to='/app'>Toutes les produits</Link></ListItemText>
                 </ListItem>
             </List>
             <Divider />
@@ -177,8 +196,9 @@ function Layout(props) {
                     <div key={category.id}>
                         <ListItem button key={category.id}
                                   onClick={event => handleMenuItemClick(event, category.id)}
-                                  selected={category.id === selectedIndex}>
-                            <ListItemText>{category.name}</ListItemText>
+                                  selected={category.id === selectedIndex}
+                                    className={classes.mainCatWrapper}>
+                            <ListItemText disableTypography className={classes.mainCategory}>{category.name}</ListItemText>
                             <IconButton
                                 onClick={(event) => handleCategoryEdit(event, category.id, category.name)}
                                 size="small">
@@ -191,8 +211,8 @@ function Layout(props) {
                             </IconButton>
                         </ListItem>
                         <List className={classes.nested}>
-                            <ListItem>
-                                <ListItemText>Ajouter une sous-catégorie</ListItemText>
+                            <ListItem className={classes.addSubCatWrapper}>
+                                <ListItemText disableTypography className={classes.addSubCategory}>Ajouter une sous-catégorie</ListItemText>
                                 <IconButton
                                     onClick={() => handleSubCategoryAdd(category.id)}
                                     size="small">
