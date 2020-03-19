@@ -1,12 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import {Typography, IconButton, Toolbar, AppBar} from '@material-ui/core';
+import {Typography, IconButton, Toolbar, AppBar, Icon} from '@material-ui/core';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
     appBar: {
+        backgroundColor: '#fff',
         marginLeft: drawerWidth,
         [theme.breakpoints.up('sm')]: {
             width: `calc(100% - ${drawerWidth}px)`,
@@ -19,6 +20,12 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
+    imageIcon: {
+        height: '100%',
+    },
+    iconRoot: {
+        textAlign: 'center',
+    }
 }));
 
 function Navbar(props) {
@@ -30,7 +37,7 @@ function Navbar(props) {
         <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
                 <IconButton
-                    color="inherit"
+                    color="primary"
                     aria-label="open drawer"
                     edge="start"
                     onClick={props.clicked}
@@ -38,8 +45,11 @@ function Navbar(props) {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap>
-                    Stock App
+                <Icon className={classes.iconRoot}>
+                    <img className={classes.imageIcon} src="/image/wool-ball.svg"/>
+                </Icon>
+                <Typography variant="h6" noWrap color="primary">
+                    TidyDO
                 </Typography>
             </Toolbar>
         </AppBar>
