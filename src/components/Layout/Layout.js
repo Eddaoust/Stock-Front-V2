@@ -11,8 +11,7 @@ import ProductAddContainer from "../../containers/ProductAddContainer/ProductAdd
 import ProductEditContainer from "../../containers/ProductEditContainer/ProductEditContainer";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import {Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemText, Modal, Button} from '@material-ui/core'
+import {Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemText, Modal, Button, CssBaseline} from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';

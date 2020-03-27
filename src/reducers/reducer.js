@@ -51,7 +51,7 @@ import {
 } from "../actions/subCategories";
 
 const initialState = {
-    user: { status: false, data : {} },
+    user: { status: false, data : {}},
     login: { loading: false, error: false },
     registration: { loading: false, error: false },
     category: {loading: false, error: false, data: false},
@@ -75,7 +75,7 @@ const reducer = (state = initialState, action) => {
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                user: { status: 'auth', data : {accessToken: action.data.token, id: action.data.data.id} },
+                user: { status: 'auth', data : { accessToken: action.data.token, id: action.data.data.id, activated: action.data.data.activated }},
                 login: { loading: false, error: false },
             }
         case LOGIN_CLEAR_ERROR:

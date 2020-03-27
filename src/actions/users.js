@@ -97,7 +97,7 @@ export function registerClearError() {
     }
 }
 
-export function registrationProcess(formValues) {
+export function registrationProcess(formValues, props) {
     return function(dispatch) {
         dispatch(registerRequest())
         return fetch(`${ROOTURL}/registration`, {
@@ -121,6 +121,12 @@ export function registrationProcess(formValues) {
                     res.json()
                     .then(response => {
                         dispatch(registerSuccess(response))
+                        props.history.push({
+                            pathname: "/",
+                            state: {
+                                registration: true
+                            }
+                        })
                     });
                 }
             })
